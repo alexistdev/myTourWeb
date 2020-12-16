@@ -11,7 +11,7 @@ class DbConnection
         $DB_HOST      = "localhost";
         $DB_USERNAME = "root";
         $DB_PASSWORD = "";
-        $DB_NAMA      = "myrepro";
+        $DB_NAMA      = "mytour";
 
         $conn = new mysqli($DB_HOST, $DB_USERNAME, $DB_PASSWORD, $DB_NAMA);
         if (mysqli_connect_errno()) {

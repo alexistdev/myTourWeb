@@ -5,7 +5,5 @@ date_default_timezone_set('Asia/Jakarta');
 
 require_once 'DbHandler.php';
 
-$nis    = $_POST["nis"];
-
 $db = new DbHandler();
-$db->daftarSiswa($nis);
+$db->tampilUser();
