@@ -14,6 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</div>
 		<?php $this->load->view('Frontend/layout/v_footer');?>
 	</div>
+
 	<?php $this->load->view('Frontend/layout/v_filejs');?>
 </body>
 </html>

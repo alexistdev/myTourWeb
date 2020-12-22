@@ -21,6 +21,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 			<?php $this->load->view('Member/konten/k_dashboard');?>
 		</div>
 		<!--	/Konten	-->
+		<!--	Footer	-->
+		<?php $this->load->view('Member/layout/v_footer');?>
+		<!--	Footer	-->
 	</div>
 	<!-- /Wrapper-->
 
