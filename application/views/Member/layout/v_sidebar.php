@@ -34,74 +34,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						</p>
 					</a>
 				</li>
+				<!-- Menu Transaksi	-->
 				<li class="nav-item">
 					<a href="<?= base_url('Member'); ?>" class="nav-link">
-						<i class="nav-icon fas fa-th"></i>
+						<i class="nav-icon fas fa-file-invoice-dollar"></i>
 						<p>
-							Widgets
+							Transaksi
+						</p>
+					</a>
+				</li>
+				<!-- Menu Invoice	-->
+				<li class="nav-item">
+					<a href="<?= base_url('Member'); ?>" class="nav-link">
+						<i class="nav-icon far fa-credit-card"></i>
+						<p>
+							Invoice
+							<span class="right badge badge-danger">New</span>
+						</p>
+					</a>
+				</li>
+				<!-- Menu Inbox	-->
+				<li class="nav-item">
+					<a href="nav-icon <?= base_url('Member'); ?>" class="nav-link">
+						<i class="fas fa-comments"></i>
+						<p>
+							Inbox
 							<span class="right badge badge-danger">New</span>
 						</p>
 					</a>
 				</li>
 				<li class="nav-item has-treeview">
 					<a href="#" class="nav-link">
-						<i class="nav-icon fas fa-copy"></i>
-						<p>
-							Layout Options
-							<i class="fas fa-angle-left right"></i>
-							<span class="badge badge-info right">6</span>
-						</p>
-					</a>
-					<ul class="nav nav-treeview">
-						<li class="nav-item">
-							<a href="../layout/top-nav.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Top Navigation</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="../layout/top-nav-sidebar.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Top Navigation + Sidebar</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="../layout/boxed.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Boxed</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="../layout/fixed-sidebar.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Fixed Sidebar</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="../layout/fixed-topnav.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Fixed Navbar</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="../layout/fixed-footer.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Fixed Footer</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="../layout/collapsed-sidebar.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Collapsed Sidebar</p>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li class="nav-item has-treeview">
-					<a href="#" class="nav-link">
 						<i class="nav-icon fas fa-chart-pie"></i>
 						<p>
-							Charts
+							Laporan
 							<i class="right fas fa-angle-left"></i>
 						</p>
 					</a>
@@ -128,61 +94,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				</li>
 				<li class="nav-item has-treeview">
 					<a href="#" class="nav-link">
-						<i class="nav-icon fas fa-tree"></i>
+						<i class="nav-icon fas fa-server"></i>
 						<p>
-							UI Elements
+							MASTER DATA
 							<i class="fas fa-angle-left right"></i>
 						</p>
 					</a>
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
 							<a href="../UI/general.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>General</p>
+								<i class="fas fa-users nav-icon"></i>
+								<p>Data User</p>
 							</a>
 						</li>
 						<li class="nav-item">
 							<a href="../UI/icons.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Icons</p>
+								<i class="fas fa-tags nav-icon"></i>
+								<p>Paket</p>
 							</a>
 						</li>
-						<li class="nav-item">
-							<a href="../UI/buttons.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Buttons</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="../UI/sliders.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Sliders</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="../UI/modals.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Modals & Alerts</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="../UI/navbar.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Navbar & Tabs</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="../UI/timeline.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Timeline</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="../UI/ribbons.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Ribbons</p>
-							</a>
-						</li>
+
 					</ul>
 				</li>
 			</ul>
