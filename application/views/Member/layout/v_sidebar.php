@@ -55,8 +55,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				</li>
 				<!-- Menu Inbox	-->
 				<li class="nav-item">
-					<a href="nav-icon <?= base_url('Member'); ?>" class="nav-link">
-						<i class="fas fa-comments"></i>
+					<a href="<?= base_url('Member'); ?>" class="nav-link">
+						<i class="nav-icon fas fa-comments"></i>
 						<p>
 							Inbox
 							<span class="right badge badge-danger">New</span>
@@ -102,7 +102,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					</a>
 					<ul class="nav nav-treeview">
 						<li class="nav-item">
-							<a href="../UI/general.html" class="nav-link">
+							<a href="<?= base_url('Masteruser'); ?>" class="nav-link">
 								<i class="fas fa-users nav-icon"></i>
 								<p>Data User</p>
 							</a>
