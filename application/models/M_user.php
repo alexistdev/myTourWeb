@@ -8,7 +8,8 @@ class M_user extends CI_Model
 		parent::__construct();
 		$this->load->database();
 		$this->tableName = "user";
-		$this->column_list = array('user.id_user as idUser', 'username', 'email','nama_lengkap', 'no_ktp', 'alamat', 'no_telp');
+		$this->tableNameB = "detail_user";
+		$this->column_list = array('user.id_user as idUser', 'email','nama_lengkap', 'no_ktp', 'alamat', 'no_telp');
 
 	}
 
@@ -18,5 +19,15 @@ class M_user extends CI_Model
 		$this->db->select($this->column_list);
 		$this->db->where('type !=', 1);
 		return $this->db->get($this->tableName);
+	}
+
+	public function simpan_data_user($dataUser)
+	{
+		$this->db->insert($this->tableName, $dataUser);
+		return $this->db->insert_id();
+	}
+	public function simpan_detail_user($dataDetailUser)
+	{
+		$this->db->insert($this->tableNameB, $dataDetailUser);
 	}
 }

@@ -35,5 +35,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 <script src="<?= base_url('vendor/almasaeed2010/adminlte/'); ?>dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?= base_url('vendor/almasaeed2010/adminlte/'); ?>dist/js/demo.js"></script>
+
+<!-- Jquery untuk memvalidasi hapus data -->
+<script>
+	$(document).on("click", "#tombolHapus", function () {
+		var userId = $(this).data('id');
+		var newUrl = "<?= base_url('/Masteruser/hapus/'); ?>" + userId;
+		$("#urlHapus").attr('href', newUrl);
+	});
+	/** After window Load */
+	$(window).bind("load", function() {
+		window.setTimeout(function() {
+			$(".alert").fadeTo(500, 0).slideUp(500, function() {
+				$(this).remove();
+			});
+		}, 2000);
+	});
+</script>
 </body>
 </html>

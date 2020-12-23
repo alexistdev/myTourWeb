@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Des 2020 pada 07.23
+-- Waktu pembuatan: 23 Des 2020 pada 16.20
 -- Versi server: 10.4.14-MariaDB
 -- Versi PHP: 7.4.10
 
@@ -24,14 +24,35 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `detail_user`
+--
+
+CREATE TABLE `detail_user` (
+  `id_detail_user` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `nama_lengkap` varchar(128) NOT NULL,
+  `no_ktp` varchar(50) DEFAULT NULL,
+  `alamat` text DEFAULT NULL,
+  `no_telp` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `detail_user`
+--
+
+INSERT INTO `detail_user` (`id_detail_user`, `id_user`, `nama_lengkap`, `no_ktp`, `alamat`, `no_telp`) VALUES
+(1, 1, 'Alexsander Hendra Wijaya', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
   `id_user` int(11) NOT NULL,
-  `username` varchar(20) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `type` int(11) NOT NULL COMMENT '1= admin\r\n2 = dosen\r\n3 = mahasiswa',
+  `type` int(11) NOT NULL COMMENT '1= admin\r\n2 = operator\r\n3 = user',
   `email` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -39,14 +60,19 @@ CREATE TABLE `user` (
 -- Dumping data untuk tabel `user`
 --
 
-INSERT INTO `user` (`id_user`, `username`, `password`, `type`, `email`) VALUES
-(1, 'user', '21232f297a57a5a743894a0e4a801fc3', 3, 'user@gmail.com'),
-(2, 'operator', '21232f297a57a5a743894a0e4a801fc3', 2, 'operator@gmail.com'),
-(3, 'admin', '21232f297a57a5a743894a0e4a801fc3', 1, 'admin@gmail.com');
+INSERT INTO `user` (`id_user`, `password`, `type`, `email`) VALUES
+(1, '25f9e794323b453885f5181f1b624d0b', 3, 'alexistdev@gmail.com');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indeks untuk tabel `detail_user`
+--
+ALTER TABLE `detail_user`
+  ADD PRIMARY KEY (`id_detail_user`),
+  ADD KEY `id_user` (`id_user`);
 
 --
 -- Indeks untuk tabel `user`
@@ -59,10 +85,26 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT untuk tabel `detail_user`
+--
+ALTER TABLE `detail_user`
+  MODIFY `id_detail_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `detail_user`
+--
+ALTER TABLE `detail_user`
+  ADD CONSTRAINT `detail_user_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

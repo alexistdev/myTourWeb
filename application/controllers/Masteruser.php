@@ -10,6 +10,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 
 class Masteruser extends CI_Controller {
+	protected $user;
+	protected $form_validation;
+	protected $session;
+	protected $input;
 
 	public function __construct()
 	{
@@ -26,5 +30,50 @@ class Masteruser extends CI_Controller {
 		$data['title'] = "Dashboard MyTour | Paket Wisata Tour And Travel Terbaik di Lampung";
 		$data['dataUser'] = $this->user->getData()->result_array();
 		$this->load->view('Member/v_datauser', $data);
+	}
+
+	public function tambah()
+	{
+		$this->form_validation->set_rules(
+            'namaLengkap',
+            'Nama Lengkap',
+            'trim|required|min_length[4]',
+            [
+                'required' => 'Nama Lengkap harus diisi!',
+                'min_length' => 'Panjang karakter Nama minimal 4 karakter!'
+            ]
+        );
+		$this->form_validation->set_rules(
+			'emailUser',
+			'Email User',
+			'trim|required',
+			[
+				'required' => 'Nama Lengkap harus diisi!'
+			]
+		);
+		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+		if ($this->form_validation->run() == false) {
+			$this->session->set_flashdata('pesan', validation_errors());
+			$this->index();
+		} else {
+			$namaLengkap = $this->input->post('namaLengkap', TRUE);
+			$emailUser = $this->input->post('emailUser', TRUE);
+			$password = md5("123456789");
+			//simpan ke dalam tabel user
+			$dataUser = [
+				'email' => $emailUser,
+				'password' => $password,
+				'type' => 3
+			];
+			$idUser = $this->user->simpan_data_user($dataUser);
+			//menyimpan ke dalam tabel detail_user
+			$dataDetailUser = [
+				'id_user' => $idUser,
+				'nama_lengkap' => $namaLengkap
+			];
+			$this->user->simpan_detail_user($dataDetailUser);
+			$this->session->set_flashdata('pesan2', '<div class="alert alert-success" role="alert">Pesan berhasil dibuat!</div>');
+			redirect('Masteruser');
+		}
 	}
 }
