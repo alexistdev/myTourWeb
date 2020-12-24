@@ -30,4 +30,10 @@ class M_user extends CI_Model
 	{
 		$this->db->insert($this->tableNameB, $dataDetailUser);
 	}
+
+	public function Cek_Email($email) {
+		$this->db->where('email',$email);
+		$query = $this->db->get($this->tableName);
+		return $query->num_rows();
+	}
 }

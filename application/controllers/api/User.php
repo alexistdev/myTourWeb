@@ -5,11 +5,13 @@ use chriskacerguis\RestServer\RestController;
 
 
 class User extends RestController {
+	public $user;
 
 	function __construct()
 	{
 		// Construct the parent class
 		parent::__construct();
+		$this->load->model('M_user', 'user');
 	}
 
 	public function tampil_get()
@@ -52,6 +54,15 @@ class User extends RestController {
 					'message' => 'No such user found'
 				], 404 );
 			}
+		}
+	}
+
+	public function cekEmail_post()
+	{
+		$email = $this->post('email');
+		$cekEmail = $this->user->Cek_Email($email);
+		if ($cekEmail > 0){
+			$this->response( "ok", 200 );
 		}
 	}
 }

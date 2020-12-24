@@ -51,6 +51,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 			});
 		}, 2000);
 	});
+	//ajax untuk cek email
+	$('#email').blur(function(){
+		var email = $('#email').val();
+
+		$.ajax({
+			type: "POST",
+			url: "<?php echo base_url('api/User/cekEmail');?>",
+			// data: $(this).serialize(),
+			data:{
+				email:email
+			},
+			success: function (data){
+				if(data=="ok"){
+					$('#email_result').html('<img src="<?php echo base_url('assets/gambar/not.png');?>" width="5%"> email sudah pernah terdaftar');
+					$("#email").removeClass("form-control is-valid").addClass("form-control is-invalid");
+					$('#email').focus();
+				} else {
+					if (email.length == 0){
+						$('#email_result').html('');
+						$("#email").removeClass("form-control is-invalid").addClass("form-control is-valid");
+					} else {
+						$('#email_result').html('');
+						$("#email").removeClass("form-control is-invalid").addClass("form-control is-valid");
+
+					}
+				}
+			}
+		});
+	});
 </script>
 </body>
 </html>

@@ -109,13 +109,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 							<div class="col-md-12">
 								<div class="form-group">
 									<label>Email User</label>
-									<?= form_input(['name' => 'emailUser', 'type' => 'text', 'class' => 'form-control', 'placeholder' => 'Email', 'maxlength' => 80, 'value' => set_value('emailUser')]); ?>
+									<?= form_input(['name' => 'email', 'id'=>'email','type' => 'text', 'class' => 'form-control', 'placeholder' => 'Email', 'maxlength' => 80, 'value' => set_value('email')]); ?>
+									<span id="email_result" class="text-danger"></span>
 								</div>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-12">
-								<p class="text-danger">Password otomatis akan digenerate : 123456789</p>
+							<div class="col-md-12 card-dark">
+								<div class="card-header">
+									<p class="text-white">Password otomatis akan digenerate : 123456789</p>
+								</div>
+
 							</div>
 						</div>
 						<!-- Tombol Simpan -->

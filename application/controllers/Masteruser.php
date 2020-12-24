@@ -10,10 +10,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 
 class Masteruser extends CI_Controller {
-	protected $user;
-	protected $form_validation;
-	protected $session;
-	protected $input;
+	public $user;
+	public $session;
+	public $form_validation;
+	public $input;
+
 
 	public function __construct()
 	{
@@ -76,4 +77,19 @@ class Masteruser extends CI_Controller {
 			redirect('Masteruser');
 		}
 	}
+
+//	//ajax cek email apakah sudah ada atau belum
+//	/*========================================*/
+//	public function checkEmail(){
+//		if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+////			$email = $this->input->post("emailUser");
+//			$email = $this->input
+//			$cekEmail = $this->user->Cek_Email($email);
+//			if ($cekEmail > 0){
+//				echo "ok";
+//			}
+//		} else {
+//			redirect('Masteruser');
+//		}
+//	}
 }
