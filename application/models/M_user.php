@@ -36,4 +36,17 @@ class M_user extends CI_Model
 		$query = $this->db->get($this->tableName);
 		return $query->num_rows();
 	}
+
+	public function cek_id_user($idUser){
+		$this->db->where('id_user', $idUser);
+		return $this->db->get($this->tableName)->num_rows();
+	}
+
+	public function getDetailInfo($idUser)
+	{
+		$this->db->join('detail_user', 'detail_user.id_user=user.id_user');
+		$this->db->select($this->column_list);
+		$this->db->where('user.id_user', $idUser);
+		return $this->db->get($this->tableName)->row();
+	}
 }

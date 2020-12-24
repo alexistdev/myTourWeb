@@ -36,6 +36,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 <!-- AdminLTE for demo purposes -->
 <script src="<?= base_url('vendor/almasaeed2010/adminlte/'); ?>dist/js/demo.js"></script>
 
+<!-- DataTables -->
+<script src="<?= base_url('vendor/almasaeed2010/adminlte/'); ?>plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="<?= base_url('vendor/almasaeed2010/adminlte/'); ?>plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="<?= base_url('vendor/almasaeed2010/adminlte/'); ?>plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?= base_url('vendor/almasaeed2010/adminlte/'); ?>plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
 <!-- Jquery untuk memvalidasi hapus data -->
 <script>
 	$(document).on("click", "#tombolHapus", function () {
@@ -54,11 +60,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 	//ajax untuk cek email
 	$('#email').blur(function(){
 		var email = $('#email').val();
-
 		$.ajax({
 			type: "POST",
 			url: "<?php echo base_url('api/User/cekEmail');?>",
-			// data: $(this).serialize(),
 			data:{
 				email:email
 			},
@@ -78,6 +82,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					}
 				}
 			}
+		});
+	});
+	//Datatable
+	$(function () {
+		$("#tabelUser").DataTable({
+			"responsive": true,
+			"autoWidth": false,
 		});
 	});
 </script>

@@ -37,7 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					echo $this->session->flashdata('pesan2'); ?>
 				</div>
 			</div>
-			<table class="table table-bordered table-hover table-striped">
+			<table id="tabelUser" class="table table-bordered table-hover table-striped">
 				<thead>
 					<tr>
 						<th class="text-center">No.</th>
@@ -57,7 +57,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						<td class="text-center"><?= sanitasi($row['email']); ?></td>
 						<td class="text-center"><?= sanitasi($row['no_telp']); ?></td>
 						<td class="text-center">
-							<button type="button"  class="btn btn-primary"><i class="fas fa-eye"></i></button>
+							<a href="<?= base_url('Masteruser/detail/'. sanitasi($row['idUser'])); ?>"><button type="button"  class="btn btn-primary"><i class="fas fa-eye"></i></button></a>
 							<button type="button" id="tombolHapus" class="btn btn-danger" data-toggle="modal" data-target="#modalHapus" data-id="<?= $row['idUser']; ?>"><i class="fas fa-trash"></i></button>
 						</td>
 					</tr>
@@ -99,8 +99,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
-									<label>Nama Lengkap</label>
-									<?= form_input(['name' => 'namaLengkap', 'type' => 'text', 'class' => 'form-control', 'placeholder' => 'Nama Lengkap', 'maxlength' => 80, 'value' => set_value('namaLengkap')]); ?>
+									<label>Nama Lengkap <span class="text-danger">*</span></label>
+									<?= form_input(['name' => 'namaLengkap', 'type' => 'text', 'class' => 'form-control', 'placeholder' => 'Nama Lengkap', 'maxlength' => 80, 'value' => set_value('namaLengkap'), 'required'=>'required']); ?>
 								</div>
 							</div>
 						</div>
@@ -108,12 +108,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
-									<label>Email User</label>
-									<?= form_input(['name' => 'email', 'id'=>'email','type' => 'text', 'class' => 'form-control', 'placeholder' => 'Email', 'maxlength' => 80, 'value' => set_value('email')]); ?>
+									<label>Email User <span class="text-danger">*</span></label>
+									<?= form_input(['name' => 'email', 'id'=>'email','type' => 'text', 'class' => 'form-control', 'placeholder' => 'Email', 'maxlength' => 80, 'value' => set_value('email'),'required'=>'required']); ?>
 									<span id="email_result" class="text-danger"></span>
 								</div>
 							</div>
 						</div>
+						<!-- Nama Lengkap User -->
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>Nomor Telepon</label>
+									<?= form_input(['name' => 'nomorTelepon', 'type' => 'text', 'class' => 'form-control', 'placeholder' => 'Nomor Telepon', 'maxlength' => 30, 'value' => set_value('nomorTelepon')]); ?>
+								</div>
+							</div>
+						</div>
+
 						<div class="row">
 							<div class="col-md-12 card-dark">
 								<div class="card-header">

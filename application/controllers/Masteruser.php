@@ -30,7 +30,13 @@ class Masteruser extends CI_Controller {
 	{
 		$data['title'] = "Dashboard MyTour | Paket Wisata Tour And Travel Terbaik di Lampung";
 		$data['dataUser'] = $this->user->getData()->result_array();
-		$this->load->view('Member/v_datauser', $data);
+		$view = 'v_datauser';
+		$this->_template($data, $view);
+	}
+
+	private function _template($data, $view)
+	{
+		$this->load->view('Member/' . $view, $data);
 	}
 
 	public function tambah()
@@ -45,11 +51,19 @@ class Masteruser extends CI_Controller {
             ]
         );
 		$this->form_validation->set_rules(
-			'emailUser',
+			'nomorTelepon',
+			'Nomor Telepon',
+			'trim|max_length[30]',
+			[
+				'max_length' => 'Panjang karakter maksimal 30 karakter!'
+			]
+		);
+		$this->form_validation->set_rules(
+			'email',
 			'Email User',
 			'trim|required',
 			[
-				'required' => 'Nama Lengkap harus diisi!'
+				'required' => 'Email harus diisi!'
 			]
 		);
 		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
@@ -58,7 +72,8 @@ class Masteruser extends CI_Controller {
 			$this->index();
 		} else {
 			$namaLengkap = $this->input->post('namaLengkap', TRUE);
-			$emailUser = $this->input->post('emailUser', TRUE);
+			$emailUser = $this->input->post('email', TRUE);
+			$nomorTelepon = $this->input->post('nomorTelepon', TRUE);
 			$password = md5("123456789");
 			//simpan ke dalam tabel user
 			$dataUser = [
@@ -70,26 +85,31 @@ class Masteruser extends CI_Controller {
 			//menyimpan ke dalam tabel detail_user
 			$dataDetailUser = [
 				'id_user' => $idUser,
-				'nama_lengkap' => $namaLengkap
+				'nama_lengkap' => $namaLengkap,
+				'no_telp' => $nomorTelepon
 			];
 			$this->user->simpan_detail_user($dataDetailUser);
 			$this->session->set_flashdata('pesan2', '<div class="alert alert-success" role="alert">Pesan berhasil dibuat!</div>');
 			redirect('Masteruser');
 		}
 	}
-
-//	//ajax cek email apakah sudah ada atau belum
-//	/*========================================*/
-//	public function checkEmail(){
-//		if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-////			$email = $this->input->post("emailUser");
-//			$email = $this->input
-//			$cekEmail = $this->user->Cek_Email($email);
-//			if ($cekEmail > 0){
-//				echo "ok";
-//			}
-//		} else {
-//			redirect('Masteruser');
-//		}
-//	}
+	public function detail($idUserx=NULL){
+		$idUser = $idUserx;
+		if(($idUserx == NULL) || ($idUserx = '')){
+			redirect('Masteruser');
+		} else {
+			$cekIdUser = $this->user->cek_id_user($idUser);
+			if($cekIdUser != 0){
+				$data['title'] = "Detail User MyTour | Paket Wisata Tour And Travel Terbaik di Lampung";
+				$data['namaUser'] = $this->user->getDetailInfo($idUser)->nama_lengkap;
+				$data['emailUser'] = $this->user->getDetailInfo($idUser)->email;
+				$data['telpUser'] = $this->user->getDetailInfo($idUser)->no_telp;
+				$data['alamatUser'] = $this->user->getDetailInfo($idUser)->alamat;
+				$view = 'v_detail_user';
+				$this->_template($data, $view);
+			} else {
+				redirect('Masteruser');
+			}
+		}
+	}
 }
