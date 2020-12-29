@@ -65,4 +65,5 @@ class User extends RestController {
 			$this->response( "ok", 200 );
 		}
 	}
+
 }

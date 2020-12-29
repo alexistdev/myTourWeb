@@ -13,6 +13,10 @@ class M_user extends CI_Model
 
 	}
 
+	/**
+	 * Model untuk memproses tabel User dan Detail User
+	 */
+
 	public function getData()
 	{
 		$this->db->join('detail_user', 'detail_user.id_user=user.id_user');
@@ -48,5 +52,15 @@ class M_user extends CI_Model
 		$this->db->select($this->column_list);
 		$this->db->where('user.id_user', $idUser);
 		return $this->db->get($this->tableName)->row();
+	}
+
+	public function detail_user_update ($data,$idUser){
+		$this->db->where('id_user',$idUser);
+		$this->db->update('detail_user',$data);
+	}
+
+	public function user_update ($data,$idUser){
+		$this->db->where('id_user',$idUser);
+		$this->db->update('user',$data);
 	}
 }

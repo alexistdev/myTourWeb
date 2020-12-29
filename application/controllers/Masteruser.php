@@ -105,11 +105,88 @@ class Masteruser extends CI_Controller {
 				$data['emailUser'] = $this->user->getDetailInfo($idUser)->email;
 				$data['telpUser'] = $this->user->getDetailInfo($idUser)->no_telp;
 				$data['alamatUser'] = $this->user->getDetailInfo($idUser)->alamat;
+				$data['noKtp'] = $this->user->getDetailInfo($idUser)->no_ktp;
+				$data['idUser'] = $idUser;
 				$view = 'v_detail_user';
 				$this->_template($data, $view);
 			} else {
 				redirect('Masteruser');
 			}
+		}
+	}
+	public function update(){
+		$this->form_validation->set_rules(
+			'NamaLengkap',
+			'Nama Lengkap',
+			'trim|required|min_length[4]|max_length[80]',
+			[
+				'required' => 'Nama Lengkap harus diisi!',
+				'min_length' => 'Panjang karakter Nama minimal 4 karakter!',
+				'max_length' => 'Panjang karakter Nama maksimal 80 karakter!'
+			]
+		);
+		$this->form_validation->set_rules(
+			'passBaru',
+			'Password Baru',
+			'trim|max_length[80]',
+			[
+				'max_length' => 'Panjang karakter Password maksimal 30 karakter!'
+			]
+		);
+		$this->form_validation->set_rules(
+			'NomorTelepon',
+			'Nomor Telepon',
+			'trim|max_length[30]',
+			[
+				'max_length' => 'Panjang karakter Nama minimal 30 karakter!'
+			]
+		);
+		$this->form_validation->set_rules(
+			'NomorKtp',
+			'Nomor KTP',
+			'trim|max_length[50]',
+			[
+				'max_length' => 'Panjang karakter Nama minimal 50 karakter!'
+			]
+		);
+		$this->form_validation->set_rules(
+			'alamat',
+			'Alamat',
+			'trim|max_length[300]',
+			[
+				'max_length' => 'Panjang karakter Nama minimal 300 karakter!'
+			]
+		);
+		$idUser = $this->input->post('idUser', TRUE);
+		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+		if ($this->form_validation->run() == false) {
+			$this->session->set_flashdata('pesan', validation_errors());
+			redirect('Masteruser/detail/'.$idUser.'#settings');
+		} else {
+			$password = $this->input->post('passBaru', TRUE);
+			$namaLengkap = $this->input->post('NamaLengkap', TRUE);
+			$noTelp = $this->input->post('NomorTelepon', TRUE);
+			$ktp = $this->input->post('NomorKtp', TRUE);
+			$alamat = $this->input->post('alamat', TRUE);
+
+			// Memasukkan data untuk diupdate di tabel detail_user
+			$dataDetail = [
+				'nama_lengkap' => $namaLengkap,
+				'no_ktp' => $ktp,
+				'alamat' => $alamat,
+				'no_telp' =>$noTelp
+			];
+			$this->user->detail_user_update ($dataDetail,$idUser);
+			//jika password kosong maka password tidak diperbaharui
+			if($password != ""){
+				$dataUser = [
+					'password' => md5($password)
+				];
+				$this->user->user_update ($dataUser,$idUser);
+			}
+			//redirect jika berhasil
+			$this->session->set_flashdata('pesan2', '<div class="alert alert-success" role="alert">Data berhasil diperbaharui!</div>');
+			redirect('Masteruser/detail/'.$idUser.'#settings');
 		}
 	}
 }
