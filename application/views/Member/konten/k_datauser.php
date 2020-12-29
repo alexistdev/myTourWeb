@@ -57,8 +57,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						<td class="text-center"><?= sanitasi($row['email']); ?></td>
 						<td class="text-center"><?= sanitasi($row['no_telp']); ?></td>
 						<td class="text-center">
-							<a href="<?= base_url('Masteruser/detail/'. sanitasi($row['idUser'])); ?>"><button type="button"  class="btn btn-primary"><i class="fas fa-eye"></i></button></a>
-							<button type="button" id="tombolHapus" class="btn btn-danger" data-toggle="modal" data-target="#modalHapus" data-id="<?= $row['idUser']; ?>"><i class="fas fa-trash"></i></button>
+							<a href="<?= base_url('Masteruser/detail/'. sanitasi(encrypt_url($row['idUser']))); ?>"><button type="button"  class="btn btn-primary"><i class="fas fa-eye"></i></button></a>
+							<button type="button" id="tombolHapus" class="btn btn-danger" data-toggle="modal" data-target="#modalHapus" data-id="<?= sanitasi(encrypt_url($row['idUser'])); ?>"><i class="fas fa-trash"></i></button>
 						</td>
 					</tr>
 					<?php endforeach ?>
@@ -75,7 +75,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 						<h5 class="modal-title" id="exampleModalLabel">Hapus Data</h5>
 					</div>
 					<div class="modal-body">
-						Apakah anda yakin ingin menghapus data ini <span id="dataID"></span> ?
+						Apakah anda yakin ingin menghapus data ini ?
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

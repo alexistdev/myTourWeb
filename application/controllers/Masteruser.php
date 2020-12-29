@@ -2,8 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Class : Member (MemberController)
- * Login class to control to authenticate user credentials and starts user's session.
+ * Class : Masteruser (Masteruser Controller)
+ * Kelas untuk menanganti halaman Master Data/ User
  * @author : Calysta sakralya althasya (1711010041)
  * @version : 1.0
  * @develop : 18 Desember 2020
@@ -38,6 +38,10 @@ class Masteruser extends CI_Controller {
 	{
 		$this->load->view('Member/' . $view, $data);
 	}
+
+	/**
+	 * Method untuk menambahkan data user.
+	 */
 
 	public function tambah()
 	{
@@ -93,8 +97,13 @@ class Masteruser extends CI_Controller {
 			redirect('Masteruser');
 		}
 	}
+
+	/**
+	 * Method menampilkan detail user.
+	 */
+
 	public function detail($idUserx=NULL){
-		$idUser = $idUserx;
+		$idUser = decrypt_url($idUserx);
 		if(($idUserx == NULL) || ($idUserx = '')){
 			redirect('Masteruser');
 		} else {
@@ -114,6 +123,11 @@ class Masteruser extends CI_Controller {
 			}
 		}
 	}
+
+	/**
+	 * Method untuk mengupdate data user.
+	 */
+
 	public function update(){
 		$this->form_validation->set_rules(
 			'NamaLengkap',
@@ -187,6 +201,20 @@ class Masteruser extends CI_Controller {
 			//redirect jika berhasil
 			$this->session->set_flashdata('pesan2', '<div class="alert alert-success" role="alert">Data berhasil diperbaharui!</div>');
 			redirect('Masteruser/detail/'.$idUser.'#settings');
+		}
+	}
+
+	public function hapus($idUser=NULL)
+	{
+		$idUser = decrypt_url($idUser);
+		//mengecek apakah idUser ada;
+		$cekUser = $this->user->cek_id_user($idUser);
+		if($cekUser != 0){
+			$this->user->hapus_user($idUser);
+			$this->session->set_flashdata('pesan2', '<div class="alert alert-danger" role="alert">Data berhasil dihapus!</div>');
+			redirect('Masteruser');
+		} else {
+			redirect('Masteruser');
 		}
 	}
 }

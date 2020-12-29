@@ -63,4 +63,9 @@ class M_user extends CI_Model
 		$this->db->where('id_user',$idUser);
 		$this->db->update('user',$data);
 	}
+
+	public function hapus_user($idUser){
+		$this->db->where('id_user', $idUser);
+		$this->db->delete('user');
+	}
 }
