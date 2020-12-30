@@ -55,7 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				</li>
 				<!-- Menu Inbox	-->
 				<li class="nav-item">
-					<a href="<?= base_url('Member'); ?>" class="nav-link">
+					<a href="<?= base_url('Inbox'); ?>" class="nav-link">
 						<i class="nav-icon fas fa-comments"></i>
 						<p>
 							Inbox

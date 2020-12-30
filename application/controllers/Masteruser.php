@@ -204,6 +204,10 @@ class Masteruser extends CI_Controller {
 		}
 	}
 
+	/**
+	 * Method untuk menghapus data user.
+	 */
+
 	public function hapus($idUser=NULL)
 	{
 		$idUser = decrypt_url($idUser);
