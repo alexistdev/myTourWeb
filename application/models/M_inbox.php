@@ -11,7 +11,7 @@ class M_inbox extends CI_Model
 		$this->tableNameB = "inboxbalas";
 		$this->tableNameC = "user";
 		$this->tableNameD = "detail_user";
-		$this->column_list = array('id_inbox', 'nama_lengkap','judul', 'pesan', 'time', 'status');
+		$this->column_list = array('id_inbox', 'nama_lengkap','key_token','judul', 'pesan', 'time', 'status');
 
 	}
 	public function getData()
@@ -22,4 +22,30 @@ class M_inbox extends CI_Model
 		$this->db->where('type !=', 1);
 		return $this->db->get($this->tableNameA);
 	}
+
+	public function cek_inbox($token)
+	{
+		$this->db->where('key_token', $token);
+		return $this->db->get($this->tableNameA)->num_rows();
+	}
+
+	public function getDetail($token)
+	{
+		$this->db->where('key_token', $token);
+		$this->db->join($this->tableNameC, 'user.id_user=inbox.id_user');
+		$this->db->join($this->tableNameD, 'detail_user.id_user=user.id_user');
+		return $this->db->get($this->tableNameA)->row();
+	}
+
+	public function simpan_admin_balas($dataBalas)
+	{
+		$this->db->insert($this->tableNameB, $dataBalas);
+	}
+
+	public function getData_balas($token)
+	{
+		$this->db->where('key_token',$token);
+		return $this->db->get($this->tableNameB);
+	}
+
 }
