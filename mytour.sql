@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 23 Des 2020 pada 16.20
--- Versi server: 10.4.14-MariaDB
--- Versi PHP: 7.4.10
+-- Generation Time: Jan 07, 2021 at 11:43 AM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `detail_user`
+-- Table structure for table `detail_user`
 --
 
 CREATE TABLE `detail_user` (
@@ -37,16 +37,63 @@ CREATE TABLE `detail_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `detail_user`
+-- Dumping data for table `detail_user`
 --
 
 INSERT INTO `detail_user` (`id_detail_user`, `id_user`, `nama_lengkap`, `no_ktp`, `alamat`, `no_telp`) VALUES
-(1, 1, 'Alexsander Hendra Wijaya', NULL, NULL, NULL);
+(5, 5, 'Alexsander Hendra Wijaya', NULL, NULL, '085602013002');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user`
+-- Table structure for table `inbox`
+--
+
+CREATE TABLE `inbox` (
+  `id_inbox` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `is_adm` int(11) NOT NULL,
+  `judul` varchar(80) NOT NULL,
+  `pesan` text NOT NULL,
+  `key_token` varchar(100) NOT NULL,
+  `time` int(11) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `inbox`
+--
+
+INSERT INTO `inbox` (`id_inbox`, `id_user`, `is_adm`, `judul`, `pesan`, `key_token`, `time`, `status`) VALUES
+(3, 5, 0, 'ini testing judul', 'lorem ipssum', '8c8d357b5e872bbacd45197626bd5759', 1609353632, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inboxbalas`
+--
+
+CREATE TABLE `inboxbalas` (
+  `id_balas` int(11) NOT NULL,
+  `is_admin` int(11) NOT NULL,
+  `key_token` int(100) NOT NULL,
+  `pesan` text NOT NULL,
+  `time` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `inboxbalas`
+--
+
+INSERT INTO `inboxbalas` (`id_balas`, `is_admin`, `key_token`, `pesan`, `time`) VALUES
+(1, 1, 8, 'adadadaaaaaaaaaaaaaaaaaaaaaaaa', 1609391729),
+(2, 2, 8, 'Take me to your leader! Switzerland is small and neutral! We are more like Germany, ambitious and misunderstood!', 1609392886),
+(3, 1, 8, 'cupcake yang kecil , dimana , dimana', 1609393384);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -57,54 +104,85 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id_user`, `password`, `type`, `email`) VALUES
-(1, '25f9e794323b453885f5181f1b624d0b', 3, 'alexistdev@gmail.com');
+(5, '25f9e794323b453885f5181f1b624d0b', 3, 'alexistdev@gmail.com');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `detail_user`
+-- Indexes for table `detail_user`
 --
 ALTER TABLE `detail_user`
   ADD PRIMARY KEY (`id_detail_user`),
   ADD KEY `id_user` (`id_user`);
 
 --
--- Indeks untuk tabel `user`
+-- Indexes for table `inbox`
+--
+ALTER TABLE `inbox`
+  ADD PRIMARY KEY (`id_inbox`),
+  ADD KEY `inbox_ibfk_1` (`id_user`);
+
+--
+-- Indexes for table `inboxbalas`
+--
+ALTER TABLE `inboxbalas`
+  ADD PRIMARY KEY (`id_balas`);
+
+--
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `detail_user`
+-- AUTO_INCREMENT for table `detail_user`
 --
 ALTER TABLE `detail_user`
-  MODIFY `id_detail_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_detail_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT untuk tabel `user`
+-- AUTO_INCREMENT for table `inbox`
+--
+ALTER TABLE `inbox`
+  MODIFY `id_inbox` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `inboxbalas`
+--
+ALTER TABLE `inboxbalas`
+  MODIFY `id_balas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `detail_user`
+-- Constraints for table `detail_user`
 --
 ALTER TABLE `detail_user`
   ADD CONSTRAINT `detail_user_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `inbox`
+--
+ALTER TABLE `inbox`
+  ADD CONSTRAINT `inbox_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

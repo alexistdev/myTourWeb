@@ -43,18 +43,24 @@ class Inbox extends CI_Controller {
 		if(($keyx == NULL) || ($keyx = '')){
 			redirect('Inbox');
 		} else{
+			//mengecek apakah idnya valid
 			$cektoken = $this->inbox->cek_inbox($key);
-			if($cektoken != 0){
-				$data['title'] = "Balas Inbox MyTour | Paket Wisata Tour And Travel Terbaik di Lampung";
-				$data['judul'] = $this->inbox->getDetail($key)->judul;
-				$data['pengirim'] = $this->inbox->getDetail($key)->nama_lengkap;
-				$data['pesanAwal'] = $this->inbox->getDetail($key)->pesan;
-				$data['waktuPembuatan'] = $this->inbox->getDetail($key)->time;
-				$data['token'] = $this->inbox->getDetail($key)->key_token;
-				$data['dataBalas'] = $this->inbox->getData_balas($key)->result_array();
-				$view = 'v_balas';
-				$this->_template($data, $view);
-
+			if($cektoken != 0) {
+				//mengecek apakah sudah ditutup inboxnya
+				$status = $this->inbox->getDetail($key)->status;
+				if ($status != 1){
+					redirect('Inbox');
+				} else {
+					$data['title'] = "Balas Inbox MyTour | Paket Wisata Tour And Travel Terbaik di Lampung";
+					$data['judul'] = $this->inbox->getDetail($key)->judul;
+					$data['pengirim'] = $this->inbox->getDetail($key)->nama_lengkap;
+					$data['pesanAwal'] = $this->inbox->getDetail($key)->pesan;
+					$data['waktuPembuatan'] = $this->inbox->getDetail($key)->time;
+					$data['token'] = $this->inbox->getDetail($key)->key_token;
+					$data['dataBalas'] = $this->inbox->getData_balas($key)->result_array();
+					$view = 'v_balas';
+					$this->_template($data, $view);
+				}
 			} else {
 				redirect('Inbox');
 			}
@@ -98,6 +104,57 @@ class Inbox extends CI_Controller {
 			} else {
 				redirect('Inbox');
 			}
+		}
+	}
+
+	public function kunci($keyx=NULL){
+		$key= $keyx;
+		if(($keyx == NULL) || ($keyx = '')){
+			redirect('Inbox');
+		} else{
+			$cektoken = $this->inbox->cek_inbox($key);
+			if($cektoken != 0){
+				//mengecek apakah status = 1 yang artinya memang terkunci, jika sudah terbuka (status = 1) maka redirect ke inbox
+				$status = $this->inbox->getDetail($key)->status;
+				if ($status != 1){
+					redirect('Inbox');
+				} else {
+					$dataInbox = [
+						'status' => 2
+					];
+					$this->inbox->ubah_status($key, $dataInbox);
+					$this->session->set_flashdata('pesan2', '<div class="alert alert-warning" role="alert">Anda telah mengunci pesan!</div>');
+					redirect('Inbox');
+				}
+			} else {
+				redirect('Inbox');
+			}
+		}
+	}
+
+	public function buka($keyx=NULL){
+		$key= $keyx;
+		if(($keyx == NULL) || ($keyx = '')){
+			redirect('Inbox');
+		} else{
+			$cektoken = $this->inbox->cek_inbox($key);
+			if($cektoken != 0){
+				//mengecek apakah status = 2 yang artinya memang terkunci, jika sudah terbuka (status = 1) maka redirect ke inbox
+				$status = $this->inbox->getDetail($key)->status;
+				if ($status != 2){
+					redirect('Inbox');
+				} else {
+					$dataInbox = [
+						'status' => 1
+					];
+					$this->inbox->ubah_status($key, $dataInbox);
+					$this->session->set_flashdata('pesan2', '<div class="alert alert-success" role="alert">Anda telah membuka kembali pesan!</div>');
+					redirect('Inbox');
+				}
+			}else {
+				redirect('Inbox');
+			}
+
 		}
 	}
 

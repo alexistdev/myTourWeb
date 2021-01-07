@@ -50,15 +50,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 				<tbody>
 					<?php
 					$no = 1;
-					foreach($dataUser as $row): ?>
+					foreach($dataUser as $row):?>
+
 					<tr>
 						<td class="text-center"><?= $no++; ?></td>
 						<td class="text-center"><?= sanitasi($row['nama_lengkap']); ?></td>
 						<td class="text-center"><?= sanitasi($row['email']); ?></td>
 						<td class="text-center"><?= sanitasi($row['no_telp']); ?></td>
 						<td class="text-center">
-							<a href="<?= base_url('Masteruser/detail/'. sanitasi(encrypt_url($row['idUser']))); ?>"><button type="button"  class="btn btn-primary"><i class="fas fa-eye"></i></button></a>
-							<button type="button" id="tombolHapus" class="btn btn-danger" data-toggle="modal" data-target="#modalHapus" data-id="<?= sanitasi(encrypt_url($row['idUser'])); ?>"><i class="fas fa-trash"></i></button>
+
+								<a href="<?= base_url('Masteruser/detail/'. sanitasi(encrypt_url($row['idUser']))); ?>"><button type="button"  class="btn btn-primary"><i class="fas fa-eye"></i></button></a>
+								<button type="button" id="tombolHapus" class="btn btn-danger" data-toggle="modal" data-target="#modalHapus" data-id="<?= sanitasi(encrypt_url($row['idUser'])); ?>"><i class="fas fa-trash"></i></button>
+
 						</td>
 					</tr>
 					<?php endforeach ?>

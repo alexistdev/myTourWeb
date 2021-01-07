@@ -44,10 +44,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 
 <!-- Jquery untuk memvalidasi hapus data -->
 <script>
-	$(document).on("click", "#tombolHapus", function () {
-		var userId = $(this).data('id');
-		var newUrl = "<?= base_url('/Masteruser/hapus/'); ?>" + userId;
-		$("#urlHapus").attr('href', newUrl);
+	/** Saat tombol modalkunci diklik */
+	$(document).on("click", "#tombolKunci", function () {
+		var token = $(this).data('id');
+		var newUrl = "<?= base_url('/Inbox/kunci/'); ?>" + token;
+		$("#urlKunci").attr('href', newUrl);
+	});
+
+	/** Saat tombol buka kunci diklik */
+	$(document).on("click", "#tombolBuka", function () {
+		var token = $(this).data('id');
+		var newUrl = "<?= base_url('/Inbox/buka/'); ?>" + token;
+		$("#urlBuka").attr('href', newUrl);
 	});
 	/** After window Load */
 	$(window).bind("load", function() {
@@ -64,6 +72,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 			"responsive": true,
 			"autoWidth": false,
 		});
+	});
+
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip()
 	});
 </script>
 </body>

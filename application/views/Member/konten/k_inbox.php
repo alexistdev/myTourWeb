@@ -49,6 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					<?php $no=1;
 						foreach($dataInbox as $row):
 							$time = sanitasi($row['time']);
+							$status = sanitasi($row['status']);
 					?>
 				<tr>
 					<td class="text-center"><?= sanitasi($no++); ?></td>
@@ -56,8 +57,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 					<td class="text-center"><?= sanitasi($row['nama_lengkap']); ?></td>
 					<td class="text-center"><?= date("d-m-Y H:i:s", $time); ?></td>
 					<td class="text-center">
-						<a href="<?= base_url('Inbox/balas/'.sanitasi($row['key_token'])); ?>"><button type="button"  class="btn btn-primary"><i class="fas fa-comments"></i></button></a>
-						<button type="button"  class="btn btn-danger"><i class="fas fa-lock"></i></button>
+						<?php if($status == 1) { ?>
+								<a href="<?= base_url('Inbox/balas/'.sanitasi($row['key_token'])); ?>"><button type="button"  class="btn btn-primary"><i class="fas fa-comments"></i></button></a>
+								<button type="button" id="tombolKunci" data-toggle="modal" data-target="#modalKunci" class="btn btn-danger" data-id="<?= sanitasi($row['key_token']); ?>"><i class="fas fa-lock"></i></button>
+						<?php } else { ?>
+							<span data-toggle="modal" id="tombolBuka" data-target="#modalBuka" data-id="<?= sanitasi($row['key_token']); ?>">
+    							<a href="#" class="btn btn-success" role="button" data-toggle="tooltip" data-placement="left" title="Lepas Kunci"><i class="fas fa-unlock"></i></a>
+  							</span>
+						<?php } ?>
 					</td>
 				</tr>
 						<?php endforeach ?>
@@ -66,85 +73,44 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 		</div>
 
 		<!-- /.card-body -->
-		<!--	Modal Hapus	-->
-		<div class="modal fade" id="modalHapus" tabindex="-1" aria-labelledby="modalHapusLabel" aria-hidden="true">
+
+		<!--	Modal Buka Kunci Pesan	-->
+		<div class="modal fade" id="modalBuka" tabindex="-1" aria-labelledby="modalBukaLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Hapus Data</h5>
+						<h5 class="modal-title" id="exampleModalLabel">Kunci Pesan</h5>
 					</div>
 					<div class="modal-body">
-						Apakah anda yakin ingin menghapus data ini ?
+						Apakah anda yakin ingin membuka kembali pesan ini ?
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<a href="" id="urlHapus"><button type="button" class="btn btn-danger">Hapus</button></a>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+						<a href="" id="urlBuka"><button type="button" class="btn btn-danger">Kunci</button></a>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!--	/Modal Hapus	-->
-		<!--	Modal Tambah Data	-->
-		<div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="modalHapusLabel" aria-hidden="true">
+		<!--	/Modal Buka Kunci Pesan	-->
+
+		<!--	Modal Kunci Pesan	-->
+		<div class="modal fade" id="modalKunci" tabindex="-1" aria-labelledby="modalHapusLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+						<h5 class="modal-title" id="exampleModalLabel">Kunci Pesan</h5>
 					</div>
 					<div class="modal-body">
-						<!-- Form Mulai	-->
-						<?= form_open('Masteruser/tambah') ?>
-						<!-- Nama Lengkap User -->
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label>Nama Lengkap <span class="text-danger">*</span></label>
-									<?= form_input(['name' => 'namaLengkap', 'type' => 'text', 'class' => 'form-control', 'placeholder' => 'Nama Lengkap', 'maxlength' => 80, 'value' => set_value('namaLengkap'), 'required'=>'required']); ?>
-								</div>
-							</div>
-						</div>
-						<!-- Email -->
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label>Email User <span class="text-danger">*</span></label>
-									<?= form_input(['name' => 'email', 'id'=>'email','type' => 'text', 'class' => 'form-control', 'placeholder' => 'Email', 'maxlength' => 80, 'value' => set_value('email'),'required'=>'required']); ?>
-									<span id="email_result" class="text-danger"></span>
-								</div>
-							</div>
-						</div>
-						<!-- Nama Lengkap User -->
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<label>Nomor Telepon</label>
-									<?= form_input(['name' => 'nomorTelepon', 'type' => 'text', 'class' => 'form-control', 'placeholder' => 'Nomor Telepon', 'maxlength' => 30, 'value' => set_value('nomorTelepon')]); ?>
-								</div>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-md-12 card-dark">
-								<div class="card-header">
-									<p class="text-white">Password otomatis akan digenerate : 123456789</p>
-								</div>
-
-							</div>
-						</div>
-						<!-- Tombol Simpan -->
-						<div class="row mt-3">
-							<div class="col-md-12">
-								<button name="submit" type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Simpan</button>
-								<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-							</div>
-						</div>
-						<?= form_close() ?>
-						<!-- /Form Berakhir	-->
+						Apakah anda yakin ingin mengunci pesan ini ?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+						<a href="" id="urlKunci"><button type="button" class="btn btn-danger">Kunci</button></a>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!--	/Modal Tambah Data	-->
+		<!--	/Modal Kunci Pesan	-->
 	</div>
 	<!-- /.card -->
 

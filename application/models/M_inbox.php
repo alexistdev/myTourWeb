@@ -19,7 +19,7 @@ class M_inbox extends CI_Model
 		$this->db->join($this->tableNameC, 'user.id_user=inbox.id_user');
 		$this->db->join($this->tableNameD, 'detail_user.id_user=user.id_user');
 		$this->db->select($this->column_list);
-		$this->db->where('type !=', 1);
+//		$this->db->orderBy('status', 'ASC');
 		return $this->db->get($this->tableNameA);
 	}
 
@@ -46,6 +46,12 @@ class M_inbox extends CI_Model
 	{
 		$this->db->where('key_token',$token);
 		return $this->db->get($this->tableNameB);
+	}
+
+	public function ubah_status($token, $data)
+	{
+		$this->db->where('key_token',$token);
+		$this->db->update('inbox',$data);
 	}
 
 }

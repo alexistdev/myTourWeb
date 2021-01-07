@@ -50,7 +50,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 
 				<!--		Pesan Balasan		-->
 				<?php foreach($dataBalas as $row) : ;?>
-
 					<div>
 						<?php if($row['is_admin'] ==1) { ?>
 							<i class="fas fa-comments bg-yellow"></i>
@@ -68,10 +67,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');?>
 								<?= sanitasi($row['pesan']); ?>
 							</div>
 						</div>
-
 					</div>
-
-
 				<?php endforeach; ?>
 				<!--		/End Pesan Balasan		-->
 				<!-- Batas Akhir -->
