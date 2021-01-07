@@ -6,7 +6,7 @@ Ini adalah web untuk generate API yang akan dikirimkan ke Android utk aplikasi M
 	<li>Adminlte 3.0.5 :https://adminlte.io/</li>	
 </ul>
 </br></br>
-Cara Instalasi:
+Cara Instalasi:</br>
 1. git clone https://github.com/alexistdev/myTourWeb.git</br>
 2. Buat database dan import database yang ada di folder mytourweb</br>
 3. Diterminal ketik: composer install
