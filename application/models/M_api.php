@@ -9,6 +9,8 @@ class M_api extends CI_Model
 		parent::__construct();
 		$this->load->database();
 		$this->tbDestinasi = 'destinasi';
+		$this->tbuser = 'user';
+		$this->tbdetailuser = 'detail_user';
 	}
 
 	/**
@@ -22,7 +24,26 @@ class M_api extends CI_Model
 		return $this->db->get($this->tbDestinasi);
 	}
 
+	/**
+	 * ==========================================================================
+	 * Table user dan detail_user
+	 * ==========================================================================
+	 */
 
+	public function cek_email($email)
+	{
+		$this->db->where('email',$email);
+		return $this->db->get($this->tbuser);
+	}
+	public function simpan_user($data)
+	{
+		$this->db->insert($this->tbuser,$data);
+		return $this->db->insert_id();
+	}
+	public function simpan_detail_user($data)
+	{
+		$this->db->insert($this->tbdetailuser,$data);
+	}
 
 
 
