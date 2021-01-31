@@ -45,6 +45,25 @@ class M_api extends CI_Model
 		$this->db->insert($this->tbdetailuser,$data);
 	}
 
+	public function cek_login($email, $password)
+	{
+		$this->db->where('email', $email);
+		$this->db->where('password', $password);
+		return $this->db->get($this->tbuser);
+	}
+
+	/** Data login */
+	public function data_user($email)
+	{
+		$this->db->where('email', $email);
+		return $this->db->get($this->tbuser);
+	}
+	public function simpan_token($data,$email)
+	{
+		$this->db->where('email',$email);
+		$this->db->update($this->tbuser,$data);
+	}
+
 
 
 

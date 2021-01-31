@@ -50,4 +50,40 @@ class Auth extends RestController
 			$this->response($dataHasil, 200);
 		}
 	}
+
+	public function login_post()
+	{
+		$email = $this->post('email');
+		$password = sha1($this->post('password'));
+		$cekUser = $this->api->cek_login($email, $password)->num_rows();
+		if ($cekUser != 0) {
+			$dataUser = $this->api->data_user($email)->row();
+			$token = $this->generateRandomString();
+			$data_session =[
+				'status' => 'berhasil',
+				'message' => 'Berhasil Login',
+				'token' => $token,
+				'id_user' => $dataUser->id_user,
+				'email' => $dataUser->email
+			];
+			/* Mengupdate token */
+			$dataToken = [
+				'token' => $token
+			];
+			$this->api->simpan_token($dataToken,$email);
+			$this->response(
+				$data_session,
+				200
+			);
+		}else{
+			$this->response([
+				'status' => 'gagal',
+				'message' => 'Username atau Password yang anda masukkan salah'
+			], 404);
+		}
+	}
+
+	private function generateRandomString($length = 10) {
+		return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+	}
 }
