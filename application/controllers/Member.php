@@ -22,7 +22,7 @@ class Member extends CI_Controller {
 		}
 	}
 
-	private function _data($data, $view)
+	private function _layout($data, $view)
 	{
 		$this->load->view('view/' . $view, $data);
 	}
@@ -31,7 +31,7 @@ class Member extends CI_Controller {
 	{
 		$data['title'] = _myJudul();
 		$view ='v_member';
-		$this->_data($data,$view);
+		$this->_layout($data,$view);
 	}
 
 	public function logout()

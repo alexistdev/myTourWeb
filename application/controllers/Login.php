@@ -18,7 +18,7 @@ class Login extends CI_Controller {
 	}
 
 	/** Template untuk memanggil view */
-	private function _template($data, $view)
+	private function _layout($data, $view)
 	{
 		$this->load->view('view/' . $view, $data);
 	}
@@ -76,7 +76,7 @@ class Login extends CI_Controller {
 			$data['image'] = $this->_create_captcha();
 			$data['title'] = _myJudul();
 			$view ='v_login';
-			$this->_template($data,$view);
+			$this->_layout($data,$view);
 		} else {
 			$username = $this->input->post('username', TRUE);
 			$password = $this->input->post('password', TRUE);
