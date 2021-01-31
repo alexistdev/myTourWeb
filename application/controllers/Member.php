@@ -11,12 +11,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Member extends CI_Controller {
 
-	/**
-	 * Halaman Index Untuk Controller.
-	 */
+	public $session;
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->model('m_admin', 'admin');
+		if ($this->session->userdata('is_login_in') !== TRUE) {
+			redirect('login');
+		}
+	}
+
+	private function _data($data, $view)
+	{
+		$this->load->view('view/' . $view, $data);
+	}
+
 	public function index()
 	{
-		$data['title'] = "Dashboard MyTour | Paket Wisata Tour And Travel Terbaik di Lampung";
-		$this->load->view('Member/v_dashboard', $data);
+		$data['title'] = _myJudul();
+		$view ='v_member';
+		$this->_data($data,$view);
+	}
+
+	public function logout()
+	{
+		$this->session->sess_destroy();
+		redirect('Login');
 	}
 }
