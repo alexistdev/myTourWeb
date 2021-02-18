@@ -6,13 +6,13 @@ use chriskacerguis\RestServer\RestController;
 class Auth extends RestController
 {
 
-	public $api;
+	public $Mapi;
 
 	public function __construct()
 	{
 		// Construct the parent class
 		parent::__construct();
-		$this->load->model('m_api', 'api');
+		$this->load->model('Mapi');
 	}
 
 	public function daftar_post()
@@ -23,7 +23,7 @@ class Auth extends RestController
 		$phone = $this->post('no_telp');
 		$inpass = sha1($password);
 
-		$cekEmail = $this->api->cek_email($email)->num_rows();
+		$cekEmail = $this->Mapi->cek_email($email)->num_rows();
 		if($cekEmail != 0){
 			$dataHasil = [
 				'status' => 'gagal',
@@ -36,13 +36,13 @@ class Auth extends RestController
 				'email' => $email,
 				'status' => 1
 			];
-			$idUser = $this->api->simpan_user($dataUser);
+			$idUser = $this->Mapi->simpan_user($dataUser);
 			$dataDetail = [
 				'id_user' => $idUser,
 				'nama_lengkap' => $namaLengkap,
 				'no_telp' => $phone
 			];
-			$this->api->simpan_detail_user($dataDetail);
+			$this->Mapi->simpan_detail_user($dataDetail);
 			$dataHasil = [
 				'status' => 'berhasil',
 				'message' => 'Data user berhasil disimpan!'
@@ -55,9 +55,9 @@ class Auth extends RestController
 	{
 		$email = $this->post('email');
 		$password = sha1($this->post('password'));
-		$cekUser = $this->api->cek_login($email, $password)->num_rows();
+		$cekUser = $this->Mapi->cek_login($email, $password)->num_rows();
 		if ($cekUser != 0) {
-			$dataUser = $this->api->data_user($email)->row();
+			$dataUser = $this->Mapi->data_user($email)->row();
 			$token = $this->generateRandomString();
 			$data_session =[
 				'status' => 'berhasil',
@@ -70,7 +70,7 @@ class Auth extends RestController
 			$dataToken = [
 				'token' => $token
 			];
-			$this->api->simpan_token($dataToken,$email);
+			$this->Mapi->simpan_token($dataToken,$email);
 			$this->response(
 				$data_session,
 				200

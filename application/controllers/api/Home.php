@@ -6,22 +6,22 @@ use chriskacerguis\RestServer\RestController;
 
 class Home extends RestController
 {
-	public $api;
+	public $Mapi;
 
 	function __construct()
 	{
 		// Construct the parent class
 		parent::__construct();
-		$this->load->model('M_api', 'api');
+		$this->load->model('Mapi');
 	}
 
 	public function destinasi_get()
 	{
-		$getData =  $this->api->data_tampil_destinasi();
-		if($getData->num_rows() !=0 ){
+		$dataDestinasi =  $this->Mapi->data_tampil_destinasi();
+		if($dataDestinasi->num_rows() !=0 ){
 			$data = [
 				'status' => 'berhasil',
-				'result' => $getData->result_array(),
+				'result' => $dataDestinasi->result_array(),
 				'message' => 'Data berhasil didapatkan'
 			];
 			$this->response($data, 200);
@@ -32,6 +32,27 @@ class Home extends RestController
 				'message' => 'data kosong!'
 			], 404);
 		}
+	}
+	public function jadwal_post()
+	{
+		$idDestinasi = $this->post('id_destinasi');
+		$type = $this->post('type');
+		$dataDestinasi =  $this->Mapi->data_jadwal($idDestinasi,$type);
+		if($dataDestinasi->num_rows() !=0 ){
+			$data = [
+				'status' => 'berhasil',
+				'result' => $dataDestinasi->result_array(),
+				'message' => 'Data berhasil didapatkan'
+			];
+			$this->response($data, 200);
+		} else {
+			$this->response([
+				'status' => 'gagal',
+				'result' => [],
+				'message' => 'data kosong!'
+			], 404);
+		}
+
 	}
 
 }

@@ -13,6 +13,8 @@ class M_api extends CI_Model
 		$this->tbdetailuser = 'detail_user';
 	}
 
+
+
 	/**
 	 * ==========================================================================
 	 * Table Destinasi
