@@ -12,6 +12,26 @@ class Mapi extends CI_Model
 		$this->tbuser = 'user';
 		$this->tbdetailuser = 'detail_user';
 	}
+	/**
+	 * ==========================================================================
+	 * Table Inbox
+	 * ==========================================================================
+	 */
+	public function data_inbox($id){
+		$this->db->where('id_user',$id);
+		return $this->db->get('inbox');
+	}
+	/**
+	 * ==========================================================================
+	 * Table Booking
+	 * ==========================================================================
+	 */
+	public function data_booking($id){
+		//$this->db->select('booking.id_booking');
+		$this->db->join("paket", "paket.id_paket = booking.id_paket");
+		$this->db->where('booking.id_user',$id);
+		return $this->db->get('booking');
+	}
 
 	/**
 	 * ==========================================================================
