@@ -14,6 +14,17 @@ class Mapi extends CI_Model
 	}
 	/**
 	 * ==========================================================================
+	 * Table Fasilitas Include
+	 * ==========================================================================
+	 */
+	public function data_fasilitas_include($id,$type){
+		$this->db->where('id_destinasi', $id);
+		$this->db->where('type', $type);
+		return $this->db->get('fasilitas_include');
+	}
+
+	/**
+	 * ==========================================================================
 	 * Table Inbox
 	 * ==========================================================================
 	 */

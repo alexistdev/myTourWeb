@@ -33,23 +33,31 @@ class Home extends RestController
 			], 404);
 		}
 	}
-	public function jadwal_post()
+	public function jadwal_get($idDestinasi = NULL)
 	{
-		$idDestinasi = $this->post('id_destinasi');
-		$type = $this->post('type');
-		$dataDestinasi =  $this->Mapi->data_jadwal($idDestinasi,$type);
-		if($dataDestinasi->num_rows() !=0 ){
+		if(!empty($idDestinasi)){
+			$type = $this->GET('type');
+			$dataDestinasi =  $this->Mapi->data_jadwal($idDestinasi,$type);
+
+			if($dataDestinasi->num_rows() !=0 ){
 			$data = [
 				'status' => 'berhasil',
 				'result' => $dataDestinasi->result_array(),
 				'message' => 'Data berhasil didapatkan'
-			];
-			$this->response($data, 200);
+				];
+				$this->response($data, 200);
+			} else {
+				$this->response([
+					'status' => 'gagal',
+					'result' => [],
+					'message' => 'data kosong!'
+				], 404);
+			}
 		} else {
 			$this->response([
 				'status' => 'gagal',
 				'result' => [],
-				'message' => 'data kosong!'
+				'message' => 'id tidak ditemukan , error!'
 			], 404);
 		}
 
