@@ -99,12 +99,21 @@ class Mapi extends CI_Model
 	public function data_user($email)
 	{
 		$this->db->where('email', $email);
-		return $this->db->get($this->tbuser);
+		return $this->db->get("user");
 	}
 	public function simpan_token($data,$email)
 	{
 		$this->db->where('email',$email);
 		$this->db->update($this->tbuser,$data);
+	}
+
+	/** Data akun berdasarkan id dan token*/
+
+	public function data_akun($data,$token){
+		$this->db->join("detail_user", "detail_user.id_user = user.id_user");
+		$this->db->where("user.id_user",$data);
+		$this->db->where("user.token",$token);
+		return $this->db->get("user");
 	}
 
 
