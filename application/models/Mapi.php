@@ -116,6 +116,18 @@ class Mapi extends CI_Model
 		return $this->db->get("user");
 	}
 
+	public function update_password($dataUser,$id)
+	{
+		$this->db->where("id_user",$id);
+		$this->db->update("user",$dataUser);
+	}
+
+	public function update_detail_user($dataDetail,$id)
+	{
+		$this->db->where("id_user",$id);
+		return $this->db->update("detail_user",$dataDetail);
+	}
+
 
 
 

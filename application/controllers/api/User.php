@@ -44,21 +44,51 @@ class User extends RestController {
 		}
 	}
 
-	public function akun_put(){
-		$id = $this->put('id');
-		$email = $this->put('email');
+	public function akun_put($id){
 		$namaLengkap = $this->put('nama_lengkap');
 		$noTelp = $this->put('no_telp');
 		$noKtp = $this->put('no_ktp');
 		$alamat = $this->put('alamat');
+		$password = $this->put('password');
 		$token = $this->put('token');
 		$dataAkun =  $this->Mapi->data_akun($id,$token);
 		if($dataAkun->num_rows() !=0 ){
+			if($password != 0){
+				$dataDetail =[
+					'nama_lengkap' => $namaLengkap,
+					'no_telp' => $noTelp,
+					'alamat' => $alamat,
+					'no_ktp' => $noKtp
+				];
+				$dataUser = [
+					'password' => sha1($password)
+				];
+				$this->Mapi->update_password($dataUser,$id);
+			} else {
+				$dataDetail =[
+					'nama_lengkap' => $namaLengkap,
+					'no_telp' => $noTelp,
+					'alamat' => $alamat,
+					'no_ktp' => $noKtp
+				];
+			}
+			$update = $this->Mapi->update_detail_user($dataDetail,$id);
+			if ($update) {
+				$data = [
+					'status' => 'berhasil',
+					'message' => 'Data berhasil diperbaharui'
+				];
+				$this->response($data, 200);
+			} else {
+				$this->response([
+					'status' => 'gagal',
+					'message' => 'Gagal menyimpan ke dalam server!'
+				], 404);
+			}
 
 		}else{
 			$this->response([
 				'status' => 'gagal',
-				'result' => [],
 				'message' => 'User tidak ditemukan , error!'
 			], 404);
 		}
