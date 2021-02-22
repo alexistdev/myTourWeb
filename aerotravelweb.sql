@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 19, 2021 at 04:42 AM
+-- Generation Time: Feb 22, 2021 at 06:04 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `mytour`
+-- Database: `aerotravelweb`
 --
 
 -- --------------------------------------------------------
@@ -40,6 +40,37 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`id_admin`, `username`, `password`, `status`) VALUES
 (1, 'admin', '$2y$10$jj3StaGg/XQZ8TGzR4FbuuWu2y.Fs1AVAr5ZuCMElDQD.RoPAaNS6', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `booking`
+--
+
+CREATE TABLE `booking` (
+  `id_booking` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_paket` int(11) NOT NULL,
+  `kode_booking` varchar(10) NOT NULL,
+  `tanggal_wisata` date NOT NULL,
+  `tanggal_dibuat` date NOT NULL,
+  `jumlah_peserta` int(11) DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `total_harga` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `booking`
+--
+
+INSERT INTO `booking` (`id_booking`, `id_user`, `id_paket`, `kode_booking`, `tanggal_wisata`, `tanggal_dibuat`, `jumlah_peserta`, `status`, `total_harga`) VALUES
+(5, 5, 1, 'xNPbCHAovV', '2021-02-27', '2021-02-22', 6, 2, 870000),
+(6, 5, 2, 'ZC2txi7Hz8', '2021-02-24', '2021-02-22', 1, 2, 400000),
+(7, 5, 1, '9cE4Tml8SO', '2021-02-23', '2021-02-22', 7, 2, 1015000),
+(8, 5, 1, 'k4E2KzToOi', '2021-02-25', '2021-02-22', 4, 2, 600000),
+(9, 5, 1, 'twV24KPYjD', '2021-02-27', '2021-02-22', 4, 2, 600000),
+(10, 5, 1, '5NjcCgYdfk', '2021-02-27', '2021-02-22', 7, 2, 1015000),
+(11, 5, 1, 'eNL3yJRC61', '2021-02-26', '2021-02-22', 19, 2, 2565000);
 
 -- --------------------------------------------------------
 
@@ -99,7 +130,98 @@ CREATE TABLE `detail_user` (
 --
 
 INSERT INTO `detail_user` (`id_detail_user`, `id_user`, `nama_lengkap`, `no_ktp`, `alamat`, `no_telp`) VALUES
-(5, 5, 'Alexsanderr Hendra Wijaya', '123123123', 'adadadada', '085602013002');
+(5, 5, 'Heinrich234', '4445', 'sidodadis24', '22558834');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fasilitas_include`
+--
+
+CREATE TABLE `fasilitas_include` (
+  `id_fasilitas` int(11) NOT NULL,
+  `id_destinasi` int(11) NOT NULL,
+  `type` int(11) DEFAULT NULL,
+  `nama_fasilitas` varchar(120) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `fasilitas_include`
+--
+
+INSERT INTO `fasilitas_include` (`id_fasilitas`, `id_destinasi`, `type`, `nama_fasilitas`) VALUES
+(1, 1, 1, 'Kapal Ekplore Pulau'),
+(2, 1, 1, 'Makan 1 x Prasmanan'),
+(3, 1, 1, 'Asuransi Kecelakaan ( Selama di Perahu )'),
+(4, 1, 1, 'Air Mineral'),
+(5, 1, 1, 'Alat Snorkeling ( Mask, SnorkeL )'),
+(6, 1, 1, 'Life Jacket ( Pelampung )'),
+(7, 1, 1, 'Tiket Masuk Pulau'),
+(8, 1, 1, 'Tiket Snorkeling'),
+(9, 1, 1, 'P3K'),
+(10, 1, 1, 'Tour Guide'),
+(11, 1, 1, 'Dokumentasi Underwater'),
+(12, 1, 1, 'Dokumentasi Upwater'),
+(13, 1, 1, 'Dokumentasi Drone ( Premium )'),
+(14, 1, 1, 'Video Clip Perjalanan Trip ( Premium )'),
+(15, 1, 1, 'Free Banner Kegiatan ( Min 30 Orang )'),
+(16, 1, 1, 'Parkir Kendaraan ( Bus/Elf Only )'),
+(17, 1, 2, 'Kapal Ekplore Pulau ( 2 Hari )'),
+(18, 1, 2, 'Penginapan Sesuai Paket'),
+(19, 1, 2, 'Makan 4 Kali ( Prasmanan )'),
+(20, 1, 2, 'Air Mineral'),
+(21, 1, 2, 'Alat Snorkeling ( Mask'),
+(22, 1, 2, 'Life Jacket ( Pelampung )'),
+(23, 1, 2, 'Tiket Masuk Pulau'),
+(24, 1, 2, 'Tiket Snorkeling'),
+(25, 1, 2, 'P3K'),
+(26, 1, 2, 'Tour Guide'),
+(27, 1, 2, 'Dokumentasi Underwater'),
+(28, 1, 2, 'Dokumentasi Upwater ( SLR/Miroles )'),
+(29, 1, 2, 'Free Fotographer'),
+(30, 1, 2, 'Free Kain Tapis Untuk Foto'),
+(31, 1, 2, 'Parkir Kendaraan'),
+(32, 1, 2, 'Ruang Ganti'),
+(33, 1, 2, 'Kamar Bilas'),
+(34, 2, 1, 'Kapal Ekplore Pulau'),
+(35, 2, 1, 'Makan 1 x Nasi Box ( Standar Paket )'),
+(36, 2, 1, 'Makan 1 x Prasmanan'),
+(37, 2, 1, 'Air Mineral'),
+(38, 2, 1, 'Alat Snorkeling ( Mask'),
+(39, 2, 1, 'Life Jacket ( Pelampung )'),
+(40, 2, 1, 'Tiket Masuk Pulau Tegal Mas / Mahitam / Kelagian'),
+(41, 2, 1, 'Tiket Snorkeling'),
+(42, 2, 1, 'P3K'),
+(43, 2, 1, 'Tour Guide'),
+(44, 2, 1, 'Dokumentasi Underwater'),
+(45, 2, 1, 'Dokumentasi Upwater'),
+(46, 2, 1, 'Dokumentasi Drone'),
+(47, 2, 1, 'Video Clip Trip 1-5 Menit'),
+(48, 2, 1, 'Free Banner Kegiatan ( Min 30 Orang )'),
+(49, 2, 1, 'Parkir Kendaraan ( Bus/Elf Only )'),
+(50, 2, 1, 'Ruang Ganti ( di Tegal Mas )'),
+(51, 2, 1, 'Kamar Bilas ( di Tegal Mas )'),
+(52, 2, 1, 'Asuransi Kecelakaan ( Selama di Perahu )'),
+(53, 2, 2, 'Kapal Penyebrangan Tegal Mas PP'),
+(54, 2, 2, 'Kapal Ekplore Pulau Mahitam / Kelagian'),
+(55, 2, 2, 'Penginapan Sesuai Paket'),
+(56, 2, 2, 'Makan 3 Kali ( Siang'),
+(57, 2, 2, 'Air Mineral'),
+(58, 2, 2, 'Alat Snorkeling ( Mask'),
+(59, 2, 2, 'Life Jacket ( Pelampung )'),
+(60, 2, 2, 'Tiket Masuk Pulau Mahitam/Pasir Timbu/Kelagian'),
+(61, 2, 2, 'Tiket Snorkeling & Underwater View'),
+(62, 2, 2, 'P3K'),
+(63, 2, 2, 'Tour Guide'),
+(64, 2, 2, 'Dokumentasi Underwater'),
+(65, 2, 2, 'Dokumentasi Upwater'),
+(66, 2, 2, 'Parkir Kendaraan'),
+(67, 2, 2, 'Ruang Ganti'),
+(68, 2, 2, 'Kamar Bilas'),
+(69, 2, 2, 'Free Fotographer ( Selain High Season )'),
+(70, 2, 2, 'Free Kain Tapis Untuk Foto ( Di Pinjamkan )'),
+(71, 2, 2, 'Free Masker ( Jika Masih Tersedia )'),
+(72, 2, 2, 'Free ATV Motor ( Di Pulau Mahitam ) 2 Unit');
 
 -- --------------------------------------------------------
 
@@ -110,17 +232,23 @@ INSERT INTO `detail_user` (`id_detail_user`, `id_user`, `nama_lengkap`, `no_ktp`
 CREATE TABLE `harga` (
   `id_harga` int(11) NOT NULL,
   `id_paket` int(11) NOT NULL,
-  `keterangan` varchar(50) NOT NULL,
+  `minimal_peserta` int(11) DEFAULT NULL,
+  `maksimal_peserta` int(11) DEFAULT NULL,
+  `harga_premium` int(11) DEFAULT NULL,
   `harga_standar` int(11) NOT NULL,
-  `harga_premium` int(11) DEFAULT NULL
+  `keterangan` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `harga`
 --
 
-INSERT INTO `harga` (`id_harga`, `id_paket`, `keterangan`, `harga_standar`, `harga_premium`) VALUES
-(1, 1, '1-5 Orang', 150000, NULL);
+INSERT INTO `harga` (`id_harga`, `id_paket`, `minimal_peserta`, `maksimal_peserta`, `harga_premium`, `harga_standar`, `keterangan`) VALUES
+(1, 1, 1, 5, NULL, 150000, '1-5 Orang'),
+(2, 1, 6, 10, NULL, 145000, '6 – 10 Orang'),
+(3, 1, 11, 15, NULL, 140000, '11 – 15 Orang'),
+(4, 1, 16, 1000, NULL, 135000, '16 Orang / Dst'),
+(5, 2, 1, 2, NULL, 400000, '1-2 Orang');
 
 -- --------------------------------------------------------
 
@@ -209,7 +337,42 @@ INSERT INTO `jadwal` (`id_jadwal`, `id_destinasi`, `type`, `waktu`, `keterangan`
 (19, 2, 1, '13:30 - 14:00', 'Snorkeling & Water Sport Tegal Mas'),
 (20, 2, 1, '14:00 - 15:00', 'Menuju Pulau Mahitam / Pulau Kelagian'),
 (21, 2, 1, '15:00 - 16:30', 'Snorkeling di Kelagian / Hopping Island Pulau Mahitam'),
-(22, 2, 1, '16:30 - 17:00', 'Perjalanan Kembali ke Dermaga Ketapang');
+(22, 2, 1, '16:30 - 17:00', 'Perjalanan Kembali ke Dermaga Ketapang'),
+(23, 1, 2, '08:00 - 09:00', '[Hari1] Briefing dan Pembagian Alat Snorkeling'),
+(24, 1, 2, '09:00 - 10:00', '[Hari1] Perjalanan ke Cukuh Bedil'),
+(25, 1, 2, '10:00 – 11:30', '[Hari1] Snorkeling Cukuh Bedil “ Welcome To Pahawang “'),
+(26, 1, 2, '11:30 – 13:00', '[Hari1] Check In Villa dan Ishoma ( 1 )'),
+(27, 1, 2, '13:00 - 15:00', '[Hari1] Hopping Island dan Water Sprot di Pulau Pahawang Kecil'),
+(28, 1, 2, '15:00 – 17:00', '[Hari1] Snorkeling Taman Nemo'),
+(29, 1, 2, '17:00 – 17:30', '[Hari1] Kembali ke Penginapan'),
+(30, 1, 2, '17:30 – 19:00', '[Hari1] BMakan Malam ( 3 )'),
+(31, 1, 2, '19:00 – 22:00', '[Hari1] Free Time ( BBQ Jika Memesan )'),
+(32, 1, 2, '-', '============================================='),
+(33, 1, 2, '04:30 - 07:00', '[Hari2] Bangun pagi, Sholat, dan persiapan Hunting Sunrise Depan Villa'),
+(34, 1, 2, '07:00 - 08:30', '[Hari2] Sarapan Pagi + Olah Raga (4)'),
+(35, 1, 2, '08:30 - 09:30', '[Hari2] Perjalanan Pulang'),
+(36, 1, 2, '09:30 - 11:00', '[Hari2] Snorkeling Penggetahan'),
+(37, 1, 2, '11:00 - 13:00', '[Hari2] Isoma di Penggetahan'),
+(38, 1, 2, '13:00 - 15:00', '[Hari2] Menuju Pulau Kelagian Besar/Kecil'),
+(39, 1, 2, '15:00 - 15:30', '[Hari2] Kembali Ke Dermaga Ketapang'),
+(40, 1, 2, '16:00 - 17:00', '[Hari2] Salin dan Bilas di Dermaga'),
+(41, 2, 2, '07:00 - 08:00', '[Hari1] Kedatangan Peserta'),
+(42, 2, 2, '08:00 - 09:00', '[Hari1] Briefiung dan Pembagian Alat'),
+(43, 2, 2, '09:00 - 10:00', '[Hari1] Perjalanan Menuju Pulau Tegal Mas'),
+(44, 2, 2, '10:00 - 11:00', '[Hari1] Hopping Island di Tegal Mas / Stay di Saung Pantai (Menunggu Jadwal Check In )'),
+(45, 2, 2, '11:00 - 13:30', '[Hari1] Check In Pulau Tegal Mas ( Isoma )'),
+(46, 2, 2, '13:30 - 14:00', '[Hari1] Hopping Island Tegal Mas'),
+(47, 2, 2, '14:00 - 15:00', '[Hari1] Menuju Pulau Mahitam / Kelagian Besar'),
+(48, 2, 2, '15:00 - 17:00', '[Hari1] Snorkeling & Water Sport ATV Motor Sport di Pulau Mahitam / Kelagian Besar'),
+(49, 2, 2, '17:00 - 18:00', '[Hari1] Back To Villa dan Mandi'),
+(50, 2, 2, '18:00 - 19:00', '[Hari1] Makan Malam'),
+(51, 2, 2, '19:00 - ', '[Hari1] Free Time'),
+(52, 2, 2, '-', '============================================='),
+(53, 2, 2, '05:00 - 07:00', '[Hari2] MCK dan Menikmati Sunrise'),
+(54, 2, 2, '07:00 - 08:00', '[Hari2] Sarapan Pagi dan Olahraga'),
+(55, 2, 2, '08:00 - 10:00', '[Hari2] Snorkeling di Tegal Mas'),
+(56, 2, 2, '10:00 - 11:00', '[Hari2] Persiapan Check Out'),
+(57, 2, 2, '11:00 - 12:00', '[Hari2] Kembali ke Dermaga , Sayonara');
 
 -- --------------------------------------------------------
 
@@ -239,8 +402,8 @@ INSERT INTO `kategori` (`id_kategori`, `nama_kategori`, `status`) VALUES
 
 CREATE TABLE `paket` (
   `id_paket` int(11) NOT NULL,
-  `tipe_paket` int(11) NOT NULL COMMENT '1= open\r\n2= private',
-  `id_kategori` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `id_kategori` int(11) NOT NULL COMMENT '1 = open\r\n2 = private',
   `judul_paket` varchar(80) NOT NULL,
   `deksripsi` text NOT NULL,
   `status_paket` tinyint(4) NOT NULL
@@ -250,8 +413,9 @@ CREATE TABLE `paket` (
 -- Dumping data for table `paket`
 --
 
-INSERT INTO `paket` (`id_paket`, `tipe_paket`, `id_kategori`, `judul_paket`, `deksripsi`, `status_paket`) VALUES
-(1, 1, 1, '1 DAY PAHAWANG NEW NORMAL 2020', 'Paket Open Trip merupakan tipe paket ekonomis dimana berapapun peserta yang daftar bisa berangkat trip tanpa minimal kuota, akan tetapi dalam 1 perahu di isi 10-20 peserta bisa dari kelompok lain atau kelompok itu sendiri, Jadwal Open Trip mengikuti aturan menejemen atau kesepakatan Peserta Trip', 1);
+INSERT INTO `paket` (`id_paket`, `type`, `id_kategori`, `judul_paket`, `deksripsi`, `status_paket`) VALUES
+(1, 1, 1, '1 DAY PAHAWANG NEW NORMAL 2020', 'Open Trip', 1),
+(2, 1, 1, '2 DAY PAHAWANG NEW NORMAL 2020', 'Privat', 1);
 
 -- --------------------------------------------------------
 
@@ -272,7 +436,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `password`, `email`, `status`, `token`) VALUES
-(5, '1bff10ca1e9743c39dc90a14fb165f6b6e9dcb4b', 'alexistdev@gmail.com', 1, 'dqMDQGgEwh');
+(5, '12dea96fec20593566ab75692c9949596833adc9', 'user@gmail.com', 1, 'eBwcdDlMyN');
 
 --
 -- Indexes for dumped tables
@@ -283,6 +447,12 @@ INSERT INTO `user` (`id_user`, `password`, `email`, `status`, `token`) VALUES
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id_admin`);
+
+--
+-- Indexes for table `booking`
+--
+ALTER TABLE `booking`
+  ADD PRIMARY KEY (`id_booking`);
 
 --
 -- Indexes for table `destinasi`
@@ -304,6 +474,12 @@ ALTER TABLE `destinasi_like`
 ALTER TABLE `detail_user`
   ADD PRIMARY KEY (`id_detail_user`),
   ADD KEY `id_user` (`id_user`);
+
+--
+-- Indexes for table `fasilitas_include`
+--
+ALTER TABLE `fasilitas_include`
+  ADD PRIMARY KEY (`id_fasilitas`);
 
 --
 -- Indexes for table `harga`
@@ -361,6 +537,12 @@ ALTER TABLE `admin`
   MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `booking`
+--
+ALTER TABLE `booking`
+  MODIFY `id_booking` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT for table `destinasi`
 --
 ALTER TABLE `destinasi`
@@ -379,10 +561,16 @@ ALTER TABLE `detail_user`
   MODIFY `id_detail_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT for table `fasilitas_include`
+--
+ALTER TABLE `fasilitas_include`
+  MODIFY `id_fasilitas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+
+--
 -- AUTO_INCREMENT for table `harga`
 --
 ALTER TABLE `harga`
-  MODIFY `id_harga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_harga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `inbox`
@@ -400,7 +588,7 @@ ALTER TABLE `inboxbalas`
 -- AUTO_INCREMENT for table `jadwal`
 --
 ALTER TABLE `jadwal`
-  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `kategori`
@@ -412,7 +600,7 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `paket`
 --
 ALTER TABLE `paket`
-  MODIFY `id_paket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_paket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`

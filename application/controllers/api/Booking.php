@@ -65,6 +65,7 @@ class Booking extends RestController {
 				$this->Mapi->simpan_booking($dataBooking);
 				$data = [
 					'status' => 'berhasil',
+					'total_harga' => $totalHarga,
 					'message' => 'Data berhasil disimpan!'
 				];
 				$this->response($data, 200);
