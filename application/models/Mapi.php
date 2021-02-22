@@ -14,6 +14,23 @@ class Mapi extends CI_Model
 	}
 	/**
 	 * ==========================================================================
+	 * Table Paket
+	 * ==========================================================================
+	 */
+	public function data_paket($kategori)
+	{
+		$this->db->where('id_kategori', $kategori);
+		return $this->db->get('paket');
+	}
+
+	public function data_harga($idPaket)
+	{
+		$this->db->where('id_paket', $idPaket);
+		return $this->db->get('harga');
+	}
+
+	/**
+	 * ==========================================================================
 	 * Table Fasilitas Include
 	 * ==========================================================================
 	 */
