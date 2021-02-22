@@ -12,6 +12,8 @@ class Mapi extends CI_Model
 		$this->tbuser = 'user';
 		$this->tbdetailuser = 'detail_user';
 	}
+
+
 	/**
 	 * ==========================================================================
 	 * Table Paket
@@ -27,6 +29,14 @@ class Mapi extends CI_Model
 	{
 		$this->db->where('id_paket', $idPaket);
 		return $this->db->get('harga');
+	}
+
+	public function data_harga_paket($paket,$peserta)
+	{
+		$this->db->where('id_paket', $paket);
+		$this->db->where("$peserta BETWEEN minimal_peserta AND maksimal_peserta");
+		$this->db->from('harga');
+		return $this->db->get();
 	}
 
 	/**
@@ -59,6 +69,11 @@ class Mapi extends CI_Model
 		$this->db->join("paket", "paket.id_paket = booking.id_paket");
 		$this->db->where('booking.id_user',$id);
 		return $this->db->get('booking');
+	}
+
+	public function simpan_booking($data)
+	{
+		$this->db->insert("booking",$data);
 	}
 
 	/**

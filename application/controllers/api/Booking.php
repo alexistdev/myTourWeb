@@ -34,13 +34,58 @@ class Booking extends RestController {
 		}
 	}
 
-	public function cekEmail_post()
+	/*Booking untuk one trip */
+	public function simpan_post()
 	{
-		$email = $this->post('email');
-		$cekEmail = $this->user->Cek_Email($email);
-		if ($cekEmail > 0){
-			$this->response( "ok", 200 );
+		$idUser = $this->post('id_user');
+		$token = $this->post('token');
+		$idPaket = $this->post('id_paket');
+		$tanggalWisata = date("Y-m-d", strtotime($this->post('tanggal_wisata')));
+		$peserta = $this->post('jumlah_peserta');
+
+		$cekValidasi = $this->Mapi->data_akun($idUser,$token);
+		if($cekValidasi->num_rows() !=0 ){
+			//mendapatkan data harga
+			$harga = $this->Mapi->data_harga_paket($idPaket,$peserta);
+			if($harga->num_rows()!= 0){
+				$hargaPaket = $harga->row()->harga_standar;
+				$tanggalNow = date("Y-m-d");
+				$kodeBooking = $this->generateRandomString();
+				$totalHarga = $hargaPaket * $peserta;
+				$dataBooking = [
+					'id_user' => $idUser,
+					'id_paket' => $idPaket,
+					'kode_booking' => $kodeBooking,
+					'tanggal_wisata' => $tanggalWisata,
+					'tanggal_dibuat' => $tanggalNow,
+					'jumlah_peserta' => $peserta,
+					'status' => 2,
+					'total_harga' => $totalHarga
+				];
+				$this->Mapi->simpan_booking($dataBooking);
+				$data = [
+					'status' => 'berhasil',
+					'message' => 'Data berhasil disimpan!'
+				];
+				$this->response($data, 200);
+			}else{
+				$this->response([
+					'status' => 'failed',
+					'message' => 'Paket tidak tersedia!'
+				], 404);
+			}
+//			var_dump($harga);
+		} else {
+			$this->response([
+				'status' => 'failed',
+				'message' => 'User tidak ditemukan!'
+			], 404);
 		}
 	}
+
+	private function generateRandomString($length = 10) {
+		return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+	}
+
 
 }
