@@ -12,6 +12,39 @@ class M_admin extends CI_Model
 		$this->tbdetailuser = 'detail_user';
 	}
 	####################################################################################
+	#                              Tabel destinasi                                     #
+	####################################################################################
+	public function get_data_destinasi($data)
+	{
+		return $this->db->get("destinasi");
+	}
+
+	public function get_data_byiddestinasi($data)
+	{
+		$this->db->where('id_destinasi', $data);
+		return $this->db->get("destinasi");
+	}
+
+	public function simpan_destinasi($data)
+	{
+		$this->db->insert("destinasi",$data);
+		return $this->db->insert_id();
+	}
+
+	public function update_destinasi($dataDestinasiGambar,$idDestinasi)
+	{
+		$this->db->where('id_destinasi',$idDestinasi);
+		$this->db->update("destinasi",$dataDestinasiGambar);
+	}
+
+	public function hapus_destinasi($id)
+	{
+		$this->db->where('id_destinasi', $id);
+		$this->db->delete("destinasi");
+	}
+
+
+	####################################################################################
 	#                              Tabel user & detailuser                             #
 	####################################################################################
 	public function get_data_user($data=null){
