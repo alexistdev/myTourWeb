@@ -52,86 +52,6 @@ class Destinasi extends CI_Controller {
 		}
 	}
 
-	public function fasilitas($idx=null)
-	{
-		$id = decrypt_url($idx);
-		$cekData = $this->admin->get_data_byiddestinasi($id)->num_rows();
-		if($idx == NULL || $idx == '' || $cekData == 0){
-			redirect('Destinasi');
-		} else {
-			$data['title'] = _myJudul();
-			$data['openTrip'] = $this->admin->get_data_fasilitas($id, 1);
-			$data['privateTrip'] = $this->admin->get_data_fasilitas($id, 2);
-			$data['idFasilitas'] = $id;
-			$view ='v_fasilitas';
-			$this->_layout($data,$view);
-		}
-	}
-
-	public function fasilitas_tambah()
-	{
-		$this->form_validation->set_rules(
-			'typeTrip',
-			'Tipe Trip',
-			'trim|required',
-			[
-				'required' => 'Tipe Trip harus diisi!'
-			]
-		);
-		$this->form_validation->set_rules(
-			'namaFasilitas',
-			'Nama Fasilitas',
-			'trim|min_length[3]|max_length[120]|required',
-			[
-				'max_length' => 'Panjang karakter Nama Fasilitas maksimal 23. karakter!',
-				'min_length' => 'Panjang karakter Nama Fasilitas minimal 3 karakter!',
-				'required' => 'Nama Fasilitas harus diisi!'
-			]
-		);
-
-		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-		if ($this->form_validation->run() === false) {
-			$idDestinasi = $this->input->post("idDestinasi", TRUE);
-			$this->session->set_flashdata('pesan', validation_errors());
-			redirect('Destinasi/fasilitas/'.encrypt_url($idDestinasi));
-		} else {
-			$idDestinasi = $this->input->post("idDestinasi", TRUE);
-			$tipe= $this->input->post("typeTrip", TRUE);
-			$namaFasilitas= $this->input->post("namaFasilitas", TRUE);
-			$dataFasilitas = [
-				'id_destinasi' => $idDestinasi,
-				'type' => $tipe,
-				'nama_fasilitas' => $namaFasilitas
-			];
-			$this->admin->simpan_fasilitas($dataFasilitas);
-			$this->session->set_flashdata('pesan2', '<div class="alert alert-success" role="alert">Data Fasilitas berhasil ditambahkan!</div>');
-			redirect('Destinasi/fasilitas/'.encrypt_url($idDestinasi));
-		}
-	}
-
-	public function hapus_fasilitas($idDestinasix=null,$idFasilitasx=null)
-	{
-		if($idDestinasix == NULL || $idDestinasix == '' || $idFasilitasx == '' || $idFasilitasx == NULL) {
-			redirect('Destinasi');
-		} else {
-			$idDestinasi = decrypt_url($idDestinasix);
-			$cekDestinasi = $this->admin->get_data_byiddestinasi($idDestinasi)->num_rows();
-			if($cekDestinasi == 0){
-				redirect('Destinasi');
-			} else {
-				$idFasilitas = decrypt_url($idFasilitasx);
-				$cekFasilitas = $this->admin->get_data_byidfasilitas($idFasilitas)->num_rows();
-				if($cekFasilitas != 0){
-					$this->admin->hapus_fasilitas($idFasilitas);
-					$this->session->set_flashdata('pesan2', '<div class="alert alert-danger" role="alert">Data berhasil dihapus!</div>');
-					redirect('Destinasi/fasilitas/'.encrypt_url($idDestinasi));
-				} else {
-					redirect('Destinasi');
-				}
-			}
-		}
-	}
-
 	public function edit($idx=null)
 	{
 		$id = decrypt_url($idx);
@@ -287,5 +207,196 @@ class Destinasi extends CI_Controller {
 			redirect('Destinasi');
 		}
 	}
+
+	####################################### Halaman Jadwal di Destinasi ##########################################################
+	##############################################################################################################################
+
+	public function jadwal($idx=null)
+	{
+		$id = decrypt_url($idx);
+		$cekData = $this->admin->get_data_byiddestinasi($id)->num_rows();
+		if ($idx == NULL || $idx == '' || $cekData == 0) {
+			redirect('Destinasi');
+		} else {
+			$data['title'] = _myJudul();
+			$data['openTrip'] = $this->admin->get_data_jadwal($id, 1);
+			$data['privateTrip'] = $this->admin->get_data_jadwal($id, 2);
+			$data['idDestinasi'] = $id;
+			$view = 'v_jadwal';
+			$this->_layout($data, $view);
+		}
+	}
+
+	public function jadwal_tambah()
+	{
+		$this->form_validation->set_rules(
+			'typeTrip',
+			'Tipe Trip',
+			'trim|required',
+			[
+				'required' => 'Tipe Trip harus diisi!'
+			]
+		);
+		$this->form_validation->set_rules(
+			'waktuPelaksanaan',
+			'Waktu Pelaksanaan',
+			'trim|min_length[3]|max_length[50]|required',
+			[
+				'max_length' => 'Panjang karakter Waktu Pelaksanaan maksimal 50. karakter!',
+				'min_length' => 'Panjang karakter Waktu Pelaksanaan minimal 3 karakter!',
+				'required' => 'Waktu Pelaksanaan harus diisi!'
+			]
+		);
+		$this->form_validation->set_rules(
+			'namaKegiatan',
+			'Nama Kegiatan',
+			'trim|min_length[3]|max_length[255]|required',
+			[
+				'max_length' => 'Panjang karakter Nama Kegiatan maksimal 255. karakter!',
+				'min_length' => 'Panjang karakter Nama Kegiatan minimal 3 karakter!',
+				'required' => 'Nama Kegiatan harus diisi!'
+			]
+		);
+
+		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+		if ($this->form_validation->run() === false) {
+			$idDestinasi = $this->input->post("idDestinasi", TRUE);
+			$this->session->set_flashdata('pesan', validation_errors());
+			redirect('Destinasi/jadwal/' . encrypt_url($idDestinasi));
+		} else {
+			$idDestinasi = $this->input->post("idDestinasi", TRUE);
+			$tipe= $this->input->post("typeTrip", TRUE);
+			$waktuPelaksanaan= $this->input->post("waktuPelaksanaan", TRUE);
+			$namaKegiatan= $this->input->post("namaKegiatan", TRUE);
+
+			$dataJadwal = [
+				'id_destinasi' => $idDestinasi,
+				'type' => $tipe,
+				'waktu' => $waktuPelaksanaan,
+				'keterangan' => $namaKegiatan
+			];
+			$this->admin->simpan_jadwal($dataJadwal);
+			$this->session->set_flashdata('pesan2', '<div class="alert alert-success" role="alert">Data Jadwal berhasil ditambahkan!</div>');
+			redirect('Destinasi/jadwal/'.encrypt_url($idDestinasi));
+		}
+	}
+	public function hapus_jadwal($idDestinasix=null,$idJadwalx=null)
+	{
+		if ($idDestinasix == NULL || $idDestinasix == '' || $idJadwalx == '' || $idJadwalx == NULL) {
+			redirect('Destinasi');
+		} else {
+			$idDestinasi = decrypt_url($idDestinasix);
+			$cekDestinasi = $this->admin->get_data_byiddestinasi($idDestinasi)->num_rows();
+			if ($cekDestinasi == 0) {
+				redirect('Destinasi');
+			} else {
+				$idJadwal = decrypt_url($idJadwalx);
+				$cekJadwal = $this->admin->get_data_byidjadwal($idJadwal)->num_rows();
+				if($cekJadwal != 0){
+					$this->admin->hapus_jadwal($idJadwal);
+					$this->session->set_flashdata('pesan2', '<div class="alert alert-danger" role="alert">Data berhasil dihapus!</div>');
+					redirect('Destinasi/jadwal/'.encrypt_url($idDestinasi));
+				} else {
+					redirect('Destinasi');
+				}
+			}
+		}
+	}
+
+
+	##########################################################    END      #######################################################
+	##############################################################################################################################
+
+
+
+
+
+
+	#################################### Halaman Fasilitas di Destinasi ##########################################################
+	##############################################################################################################################
+	public function fasilitas($idx=null)
+	{
+		$id = decrypt_url($idx);
+		$cekData = $this->admin->get_data_byiddestinasi($id)->num_rows();
+		if($idx == NULL || $idx == '' || $cekData == 0){
+			redirect('Destinasi');
+		} else {
+			$data['title'] = _myJudul();
+			$data['openTrip'] = $this->admin->get_data_fasilitas($id, 1);
+			$data['privateTrip'] = $this->admin->get_data_fasilitas($id, 2);
+			$data['idFasilitas'] = $id;
+			$view ='v_fasilitas';
+			$this->_layout($data,$view);
+		}
+	}
+
+	public function fasilitas_tambah()
+	{
+		$this->form_validation->set_rules(
+			'typeTrip',
+			'Tipe Trip',
+			'trim|required',
+			[
+				'required' => 'Tipe Trip harus diisi!'
+			]
+		);
+		$this->form_validation->set_rules(
+			'namaFasilitas',
+			'Nama Fasilitas',
+			'trim|min_length[3]|max_length[120]|required',
+			[
+				'max_length' => 'Panjang karakter Nama Fasilitas maksimal 23. karakter!',
+				'min_length' => 'Panjang karakter Nama Fasilitas minimal 3 karakter!',
+				'required' => 'Nama Fasilitas harus diisi!'
+			]
+		);
+
+		$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
+		if ($this->form_validation->run() === false) {
+			$idDestinasi = $this->input->post("idDestinasi", TRUE);
+			$this->session->set_flashdata('pesan', validation_errors());
+			redirect('Destinasi/fasilitas/'.encrypt_url($idDestinasi));
+		} else {
+			$idDestinasi = $this->input->post("idDestinasi", TRUE);
+			$tipe= $this->input->post("typeTrip", TRUE);
+			$namaFasilitas= $this->input->post("namaFasilitas", TRUE);
+			$dataFasilitas = [
+				'id_destinasi' => $idDestinasi,
+				'type' => $tipe,
+				'nama_fasilitas' => $namaFasilitas
+			];
+			$this->admin->simpan_fasilitas($dataFasilitas);
+			$this->session->set_flashdata('pesan2', '<div class="alert alert-success" role="alert">Data Fasilitas berhasil ditambahkan!</div>');
+			redirect('Destinasi/fasilitas/'.encrypt_url($idDestinasi));
+		}
+	}
+
+	public function hapus_fasilitas($idDestinasix=null,$idFasilitasx=null)
+	{
+		if($idDestinasix == NULL || $idDestinasix == '' || $idFasilitasx == '' || $idFasilitasx == NULL) {
+			redirect('Destinasi');
+		} else {
+			$idDestinasi = decrypt_url($idDestinasix);
+			$cekDestinasi = $this->admin->get_data_byiddestinasi($idDestinasi)->num_rows();
+			if($cekDestinasi == 0){
+				redirect('Destinasi');
+			} else {
+				$idFasilitas = decrypt_url($idFasilitasx);
+				$cekFasilitas = $this->admin->get_data_byidfasilitas($idFasilitas)->num_rows();
+				if($cekFasilitas != 0){
+					$this->admin->hapus_fasilitas($idFasilitas);
+					$this->session->set_flashdata('pesan2', '<div class="alert alert-danger" role="alert">Data berhasil dihapus!</div>');
+					redirect('Destinasi/fasilitas/'.encrypt_url($idDestinasi));
+				} else {
+					redirect('Destinasi');
+				}
+			}
+		}
+	}
+
+	##########################################################    END      #######################################################
+	##############################################################################################################################
+
+
 
 }

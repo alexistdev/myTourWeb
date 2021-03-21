@@ -69,9 +69,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 											<td class="text-center"><img src="<?= base_url('gambar/'.sanitasi($rowDestinasi['gambar3'])); ?>" alt="<?= sanitasi($rowDestinasi['gambar3']); ?>" width="100px"></td>
 											<td class="text-center"><img src="<?= base_url('gambar/'.sanitasi($rowDestinasi['gambar4'])); ?>" alt="<?= sanitasi($rowDestinasi['gambar4']); ?>" width="100px"></td>
 											<td class="text-center"><img src="<?= base_url('gambar/'.sanitasi($rowDestinasi['gambar5'])); ?>" alt="<?= sanitasi($rowDestinasi['gambar5']); ?>" width="100px"></td>
-											<td class="text-center">
+											<td class="text-center" width="20%">
 												<a href="<?= base_url('Destinasi/edit/'.encrypt_url(sanitasi($rowDestinasi['id_destinasi']))); ?>"><button class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></button></a>
 												<a href="<?= base_url('Destinasi/fasilitas/'.encrypt_url(sanitasi($rowDestinasi['id_destinasi']))); ?>"><button class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Fasilitas"><i class="fas fa-icons"></i></button></a>
+												<a href="<?= base_url('Destinasi/jadwal/'.encrypt_url(sanitasi($rowDestinasi['id_destinasi']))); ?>"><button class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Jadwal"><i class="fas fa-calendar-alt"></i></button></a>
 												<span data-toggle="modal" id="tombolHapus" data-target="#modalKunci" data-id="<?= encrypt_url(sanitasi($rowDestinasi['id_destinasi'])); ?>">
 													<button class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fas fa-trash"></i></button>
 												</span>

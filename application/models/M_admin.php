@@ -12,7 +12,38 @@ class M_admin extends CI_Model
 		$this->tbdetailuser = 'detail_user';
 		$this->tbFasilitas = 'fasilitas_include';
 		$this->tbDestinasi = 'destinasi';
+		$this->tbJadwal = 'jadwal';
 	}
+	####################################################################################
+	#                              Tabel Jadwal                                        #
+	####################################################################################
+	public function get_data_jadwal($id, $tipe)
+	{
+		$this->db->join($this->tbDestinasi, "$this->tbDestinasi.id_destinasi = $this->tbJadwal.id_destinasi");
+		$this->db->where("$this->tbJadwal.id_destinasi", $id);
+		$this->db->where('type', $tipe);
+		//$this->db->order_by('id_jadwal', "DESC");
+		return $this->db->get($this->tbJadwal);
+	}
+
+	public function simpan_jadwal($data)
+	{
+		$this->db->insert($this->tbJadwal,$data);
+	}
+
+	public function get_data_byidjadwal($id)
+	{
+		$this->db->where("$this->tbJadwal.id_jadwal", $id);
+		return $this->db->get($this->tbJadwal);
+	}
+
+	public function hapus_jadwal($id)
+	{
+		$this->db->where("$this->tbJadwal.id_jadwal", $id);
+		$this->db->delete($this->tbJadwal);
+	}
+
+
 	####################################################################################
 	#                              Tabel Fasilitas                                     #
 	####################################################################################
