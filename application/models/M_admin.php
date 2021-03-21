@@ -10,7 +10,39 @@ class M_admin extends CI_Model
 		$this->tbadmin = 'admin';
 		$this->tbuser = 'user';
 		$this->tbdetailuser = 'detail_user';
+		$this->tbFasilitas = 'fasilitas_include';
+		$this->tbDestinasi = 'destinasi';
 	}
+	####################################################################################
+	#                              Tabel Fasilitas                                     #
+	####################################################################################
+	public function get_data_fasilitas($id, $tipe)
+	{
+		$this->db->join($this->tbDestinasi, "$this->tbDestinasi.id_destinasi = $this->tbFasilitas.id_destinasi");
+		$this->db->where("$this->tbFasilitas.id_destinasi", $id);
+		$this->db->where('type', $tipe);
+		$this->db->order_by('id_fasilitas', "DESC");
+		return $this->db->get($this->tbFasilitas);
+	}
+
+	public function get_data_byidfasilitas($id)
+	{
+		$this->db->where("$this->tbFasilitas.id_fasilitas", $id);
+		return $this->db->get($this->tbFasilitas);
+	}
+
+	public function hapus_fasilitas($id)
+	{
+		$this->db->where("$this->tbFasilitas.id_fasilitas", $id);
+		$this->db->delete($this->tbFasilitas);
+	}
+
+	public function simpan_fasilitas($data)
+	{
+		$this->db->insert($this->tbFasilitas,$data);
+	}
+
+
 	####################################################################################
 	#                              Tabel booking                                      #
 	####################################################################################

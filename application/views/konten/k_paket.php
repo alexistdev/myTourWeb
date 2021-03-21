@@ -59,25 +59,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 								</tr>
 								</thead>
 								<tbody>
-									<?php $no=1;foreach($dataDestinasi->result_array() as $rowDestinasi): ?>
-										<tr>
-											<td class="text-center"><?= $no++; ?></td>
-											<td class="text-center"><?= sanitasi($rowDestinasi['judul_destinasi']); ?></td>
-											<td class="text-center"><?= sanitasi($rowDestinasi['deskripsi']); ?></td>
-											<td class="text-center"><img src="<?= base_url('gambar/'.sanitasi($rowDestinasi['gambar1'])); ?>" alt="<?= sanitasi($rowDestinasi['gambar1']); ?>" width="100px"></td>
-											<td class="text-center"><img src="<?= base_url('gambar/'.sanitasi($rowDestinasi['gambar2'])); ?>" alt="<?= sanitasi($rowDestinasi['gambar2']); ?>" width="100px"></td>
-											<td class="text-center"><img src="<?= base_url('gambar/'.sanitasi($rowDestinasi['gambar3'])); ?>" alt="<?= sanitasi($rowDestinasi['gambar3']); ?>" width="100px"></td>
-											<td class="text-center"><img src="<?= base_url('gambar/'.sanitasi($rowDestinasi['gambar4'])); ?>" alt="<?= sanitasi($rowDestinasi['gambar4']); ?>" width="100px"></td>
-											<td class="text-center"><img src="<?= base_url('gambar/'.sanitasi($rowDestinasi['gambar5'])); ?>" alt="<?= sanitasi($rowDestinasi['gambar5']); ?>" width="100px"></td>
-											<td class="text-center">
-												<a href="<?= base_url('Destinasi/edit/'.encrypt_url(sanitasi($rowDestinasi['id_destinasi']))); ?>"><button class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></button></a>
-												<a href="<?= base_url('Destinasi/fasilitas/'.encrypt_url(sanitasi($rowDestinasi['id_destinasi']))); ?>"><button class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Fasilitas"><i class="fas fa-icons"></i></button></a>
-												<span data-toggle="modal" id="tombolHapus" data-target="#modalKunci" data-id="<?= encrypt_url(sanitasi($rowDestinasi['id_destinasi'])); ?>">
-													<button class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fas fa-trash"></i></button>
-												</span>
-											</td>
-										</tr>
-									<?php endforeach; ?>
+
 								</tbody>
 							</table>
 						</div>

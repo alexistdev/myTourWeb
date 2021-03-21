@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @develop : 18 Desember 2020
  */
 
-class Transaksi extends CI_Controller
+class Fasilitas extends CI_Controller
 {
 
 	public $session;
@@ -36,7 +36,7 @@ class Transaksi extends CI_Controller
 	{
 		$data['title'] = _myJudul();
 		$data['dataTransaksi'] = $this->admin->get_data_transaksi();
-		$view ='v_transaksi';
+		$view ='v_fasilitas';
 		$this->_layout($data,$view);
 	}
 
