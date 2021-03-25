@@ -10,6 +10,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 /**
+ * Method untuk mengenerate string unik
+ */
+if ( ! function_exists('kodegenerator')) {
+	function kodegenerator($length = 10)
+	{
+		return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+	}
+}
+/**
  * Method untuk mensanitasi output sebelum dikirimkan ke html
  */
 

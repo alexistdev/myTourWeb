@@ -36,7 +36,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<div class="col-md-6">
 						<div class="card">
 							<div class="card-body">
-								<!-- Kode Jurusan -->
+
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">
@@ -45,7 +45,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 										</div>
 									</div>
 								</div>
-								<!-- Nama Jurusan -->
+
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">

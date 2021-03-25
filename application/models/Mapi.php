@@ -55,9 +55,26 @@ class Mapi extends CI_Model
 	 * Table Inbox
 	 * ==========================================================================
 	 */
-	public function data_inbox($id){
+	public function data_inbox($id)
+	{
 		$this->db->where('id_user',$id);
 		return $this->db->get('inbox');
+	}
+
+	public function simpan_inbox($data)
+	{
+		$this->db->insert("inbox",$data);
+	}
+
+	public function simpan_balas($data)
+	{
+		$this->db->insert("inboxbalas",$data);
+	}
+
+	public function get_data_detailpesan($token)
+	{
+		$this->db->where('key_token',$token);
+		return $this->db->get('inboxbalas');
 	}
 	/**
 	 * ==========================================================================
@@ -145,6 +162,12 @@ class Mapi extends CI_Model
 		$this->db->join("detail_user", "detail_user.id_user = user.id_user");
 		$this->db->where("user.id_user",$data);
 		$this->db->where("user.token",$token);
+		return $this->db->get("user");
+	}
+
+	public function data_akun2($data){
+		$this->db->join("detail_user", "detail_user.id_user = user.id_user");
+		$this->db->where("user.id_user",$data);
 		return $this->db->get("user");
 	}
 

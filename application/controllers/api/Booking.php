@@ -38,12 +38,11 @@ class Booking extends RestController {
 	public function simpan_post()
 	{
 		$idUser = $this->post('id_user');
-		$token = $this->post('token');
 		$idPaket = $this->post('id_paket');
 		$tanggalWisata = date("Y-m-d", strtotime($this->post('tanggal_wisata')));
 		$peserta = $this->post('jumlah_peserta');
 
-		$cekValidasi = $this->Mapi->data_akun($idUser,$token);
+		$cekValidasi = $this->Mapi->data_akun2($idUser);
 		if($cekValidasi->num_rows() !=0 ){
 			//mendapatkan data harga
 			$harga = $this->Mapi->data_harga_paket($idPaket,$peserta);
@@ -75,7 +74,6 @@ class Booking extends RestController {
 					'message' => 'Paket tidak tersedia!'
 				], 404);
 			}
-//			var_dump($harga);
 		} else {
 			$this->response([
 				'status' => 'failed',

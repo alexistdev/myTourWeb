@@ -13,7 +13,39 @@ class M_admin extends CI_Model
 		$this->tbFasilitas = 'fasilitas_include';
 		$this->tbDestinasi = 'destinasi';
 		$this->tbJadwal = 'jadwal';
+		$this->tbInbox = 'inbox';
+		$this->tbBalas = 'inboxbalas';
 	}
+
+	####################################################################################
+	#                              Tabel Inbox                                         #
+	####################################################################################
+	public function get_data_inbox()
+	{
+		$this->db->join($this->tbdetailuser, "$this->tbdetailuser.id_user = $this->tbInbox.id_user");
+		$this->db->order_by("$this->tbInbox.status_pesan", "ASC");
+		$this->db->order_by("$this->tbInbox.id_inbox", "DESC");
+		return $this->db->get($this->tbInbox);
+	}
+
+	public function get_data_inboxbytoken($data)
+	{
+		$this->db->where("$this->tbBalas.key_token",$data);
+		$this->db->order_by("$this->tbBalas.id_balas", "DESC");
+		return $this->db->get($this->tbBalas);
+	}
+
+	public function simpan_balas($data)
+	{
+		$this->db->insert($this->tbBalas,$data);
+	}
+
+	public function perbaharui_inbox($dataInbox, $key)
+	{
+		$this->db->where('key_token',$id);
+		$this->db->update($this->tbInbox,$dataInbox);
+	}
+
 	####################################################################################
 	#                              Tabel Jadwal                                        #
 	####################################################################################

@@ -61,14 +61,15 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
 							</a>
 						</li>
 					</ul>
-					<ul class="nav nav-treeview">
-						<li class="nav-item">
-							<a href="<?= base_url('Paket'); ?>" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Paket Harga</p>
-							</a>
-						</li>
-					</ul>
+					
+				</li>
+				<li class="nav-item">
+					<a href="<?= base_url('Inbox'); ?>" class="nav-link">
+						<i class="nav-icon fas fa-envelope"></i>
+						<p>
+							Pesan
+						</p>
+					</a>
 				</li>
 				<li class="nav-item">
 					<a href="<?= base_url('Client'); ?>" class="nav-link">

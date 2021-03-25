@@ -27,9 +27,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<div class="row">
 				<div class="col-md-12">
 					<!-- Start Pesan -->
-					<?= $this->session->flashdata('pesan');
-					$this->session->flashdata('pesan2');
-					?>
+					<?php
+					echo $this->session->flashdata('pesan');
+					echo $this->session->flashdata('pesan2');
+					echo $this->session->flashdata('pesan3');?>
 					<!-- End Pesan -->
 				</div>
 			</div>

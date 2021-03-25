@@ -11,150 +11,79 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Inbox extends CI_Controller {
 
-	public $inbox;
+	public $admin;
 	public $load;
+	public $session;
+	public $form_validation;
+	public $input;
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('M_inbox', 'inbox');
-		//is_logged_in();
-	}
-
-	/**
-	 * Halaman Index Untuk Controller.
-	 */
-	public function index()
-	{
-		$data['title'] = "Inbox MyTour | Paket Wisata Tour And Travel Terbaik di Lampung";
-		$data['dataInbox'] = $this->inbox->getData()->result_array();
-		$view = 'v_inbox';
-		$this->_template($data, $view);
-	}
-
-	private function _template($data, $view)
-	{
-		$this->load->view('Member/' . $view, $data);
-	}
-
-	public function balas($keyx=NULL)
-	{
-		$key= $keyx;
-		if(($keyx == NULL) || ($keyx = '')){
-			redirect('Inbox');
-		} else{
-			//mengecek apakah idnya valid
-			$cektoken = $this->inbox->cek_inbox($key);
-			if($cektoken != 0) {
-				//mengecek apakah sudah ditutup inboxnya
-				$status = $this->inbox->getDetail($key)->status;
-				if ($status != 1){
-					redirect('Inbox');
-				} else {
-					$data['title'] = "Balas Inbox MyTour | Paket Wisata Tour And Travel Terbaik di Lampung";
-					$data['judul'] = $this->inbox->getDetail($key)->judul;
-					$data['pengirim'] = $this->inbox->getDetail($key)->nama_lengkap;
-					$data['pesanAwal'] = $this->inbox->getDetail($key)->pesan;
-					$data['waktuPembuatan'] = $this->inbox->getDetail($key)->time;
-					$data['token'] = $this->inbox->getDetail($key)->key_token;
-					$data['dataBalas'] = $this->inbox->getData_balas($key)->result_array();
-					$view = 'v_balas';
-					$this->_template($data, $view);
-				}
-			} else {
-				redirect('Inbox');
-			}
+		$this->load->model('M_admin', 'admin');
+		if ($this->session->userdata('is_login_in') !== TRUE) {
+			redirect('Login');
 		}
 	}
 
-	public function AdminBalas($keyx=NULL)
+	private function _layout($data, $view)
 	{
-		$key= $keyx;
-		if(($keyx == NULL) || ($keyx = '')){
+		$this->load->view('view/' . $view, $data);
+	}
+
+	public function index()
+	{
+		$data['title'] = _myJudul();
+		$data['dataInbox'] = $this->admin->get_data_inbox();
+		$view ='v_inbox';
+		$this->_layout($data,$view);
+	}
+
+	public function detail($key=null)
+	{
+		if($key=='' || $key == null){
 			redirect('Inbox');
-		} else{
-			$cektoken = $this->inbox->cek_inbox($key);
-			if($cektoken != 0){
+		}else {
+			$getData = $this->admin->get_data_inboxbytoken($key);
+			if($getData->num_rows() != 0){
 				$this->form_validation->set_rules(
 					'pesan',
 					'Pesan',
-					'trim|required|min_length[10]',
+					'trim|min_length[3]|max_length[300]|required',
 					[
-						'required' => 'Pesan harus diisi!',
-						'min_length' => 'Panjang karakter Pesan minimal 10 karakter!',
-						'max_length' => 'Panjang karakter Pesan maksimal 200 karakter'
+						'max_length' => 'Panjang karakter Pesan maksimal 300 karakter!',
+						'min_length' => 'Panjang karakter Pesan minimal 3karakter!',
+						'required' => 'Pesan harus diisi!'
 					]
 				);
 				$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
-				if ($this->form_validation->run() == false) {
+				if ($this->form_validation->run() === false) {
 					$this->session->set_flashdata('pesan', validation_errors());
-					$this->balas($key);
-				} else {
-					$pesan = $this->input->post('pesan', TRUE);
+					$data['title'] = _myJudul();
+					$data['dataDetailInbox'] = $getData->result_array();
+					$data['token'] = $key;
+					$view = 'v_detailinbox';
+					$this->_layout($data, $view);
+				}else{
+					$pesan = $this->input->post("pesan", TRUE);
 					$dataBalas = [
-						'is_admin' => 1,
+						'is_admin' => 2,
 						'key_token' => $key,
 						'pesan' => $pesan,
-						'time' => time()
+						'time' => date("Y-m-d")
 					];
-					$this->inbox->simpan_admin_balas($dataBalas);
-					$this->session->set_flashdata('pesan2', '<div class="alert alert-success" role="alert">Anda telah membalas pesan!</div>');
-					redirect('Inbox/balas/'.$key);
+					$this->admin->simpan_balas($dataBalas);
+
+					$dataInbox = [
+						'status_pesan' => 2
+					];
+					$this->admin->perbaharui_inbox($dataInbox, $key);
+					$this->session->set_flashdata('pesan2', '<div class="alert alert-success" role="alert">Berhasil Membalas Pesan!</div>');
+					redirect('Inbox/detail/'.$key);
 				}
 			} else {
 				redirect('Inbox');
 			}
-		}
-	}
-
-	public function kunci($keyx=NULL){
-		$key= $keyx;
-		if(($keyx == NULL) || ($keyx = '')){
-			redirect('Inbox');
-		} else{
-			$cektoken = $this->inbox->cek_inbox($key);
-			if($cektoken != 0){
-				//mengecek apakah status = 1 yang artinya memang terkunci, jika sudah terbuka (status = 1) maka redirect ke inbox
-				$status = $this->inbox->getDetail($key)->status;
-				if ($status != 1){
-					redirect('Inbox');
-				} else {
-					$dataInbox = [
-						'status' => 2
-					];
-					$this->inbox->ubah_status($key, $dataInbox);
-					$this->session->set_flashdata('pesan2', '<div class="alert alert-warning" role="alert">Anda telah mengunci pesan!</div>');
-					redirect('Inbox');
-				}
-			} else {
-				redirect('Inbox');
-			}
-		}
-	}
-
-	public function buka($keyx=NULL){
-		$key= $keyx;
-		if(($keyx == NULL) || ($keyx = '')){
-			redirect('Inbox');
-		} else{
-			$cektoken = $this->inbox->cek_inbox($key);
-			if($cektoken != 0){
-				//mengecek apakah status = 2 yang artinya memang terkunci, jika sudah terbuka (status = 1) maka redirect ke inbox
-				$status = $this->inbox->getDetail($key)->status;
-				if ($status != 2){
-					redirect('Inbox');
-				} else {
-					$dataInbox = [
-						'status' => 1
-					];
-					$this->inbox->ubah_status($key, $dataInbox);
-					$this->session->set_flashdata('pesan2', '<div class="alert alert-success" role="alert">Anda telah membuka kembali pesan!</div>');
-					redirect('Inbox');
-				}
-			}else {
-				redirect('Inbox');
-			}
-
 		}
 	}
 

@@ -188,7 +188,7 @@ class Destinasi extends CI_Controller {
 						$pesanError = true;
 					}else {
 						$upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
-						$file_name = $upload_data['file_name'];
+						$file_name = (!empty($upload_data['file_name']))? $upload_data['file_name'] : "" ;
 						$dataDestinasiGambar = [
 							'gambar'.$i => $file_name,
 						];
