@@ -61,7 +61,7 @@ defined('BASEPATH') or exit('No direct script access allowed');?>
 							</a>
 						</li>
 					</ul>
-					
+
 				</li>
 				<li class="nav-item">
 					<a href="<?= base_url('Inbox'); ?>" class="nav-link">
