@@ -1,4 +1,4 @@
-Ini adalah web untuk generate API yang akan dikirimkan ke Android utk aplikasi MyTour</br>
+Ini adalah web untuk generate API yang akan dikirimkan ke Android utk aplikasi MyTour (Untuk Aplikasi androidnya ada di file aerotravel.zip)</br>
 <ul>
 	<li>Php minimal 5.3.7</li>
 	<li>Codeigniter 3.1.11 http://codeigniter.com/download</li>
